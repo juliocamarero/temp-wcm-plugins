@@ -1,4 +1,3 @@
-<%
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.contenttargeting.portlet;
 
-<portlet:defineObjects />
+import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
+import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
-This is the <b>Content Targeting</b> portlet.
+/**
+ * @author Eduardo Garcia
+ */
+public class ContentTargetingPortlet extends FreeMarkerPortlet {
+
+	private RulesRegistry _rulesRegistry =
+		RulesRegistryFactory.getRulesRegistryFactory();
+
+}
