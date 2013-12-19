@@ -12,10 +12,12 @@
 		<available file="src" />
 		<then>
 			<property name="osgi.plugin.classes.dir" value="classes" />
+			<property name="osgi.plugin.lib.dir" value="lib" />
 			<property name="osgi.plugin.source.dir" value="src" />
 		</then>
 		<else>
 			<property name="osgi.plugin.classes.dir" value="docroot/WEB-INF/classes" />
+			<property name="osgi.plugin.lib.dir" value="docroot/WEB-INF/lib" />
 			<property name="osgi.plugin.source.dir" value="docroot/WEB-INF/src" />
 		</else>
 	</if>
@@ -24,7 +26,7 @@
 
 	<path id="plugin-lib.classpath">
 		<path refid="portal.classpath" />
-		<fileset dir="lib" erroronmissingdir="false" includes="*.jar" />
+		<fileset dir="${osgi.plugin.lib.dir}" erroronmissingdir="false" includes="*.jar" />
 		<pathelement path="${plugin-lib.classpath.path}" />
 	</path>
 
@@ -51,22 +53,22 @@
 	</macrodef>
 
 	<target name="build-service">
-		<mkdir dir="classes" />
-		<mkdir dir="lib" />
-		<mkdir dir="service" />
-		<mkdir dir="sql" />
-		<mkdir dir="src" />
+		<mkdir dir="docroot/WEB-INF/classes" />
+		<mkdir dir="docroot/WEB-INF/lib" />
+		<mkdir dir="docroot/WEB-INF/service" />
+		<mkdir dir="docroot/WEB-INF/sql" />
+		<mkdir dir="docroot/WEB-INF/src" />
 
-		<copy todir="classes">
-			<fileset dir="src" excludes="**/*.java" />
+		<copy todir="docroot/WEB-INF/classes">
+			<fileset dir="docroot/WEB-INF/src" excludes="**/*.java" />
 		</copy>
 
 		<path id="service.classpath">
 			<path refid="lib.classpath" />
 			<path refid="portal.classpath" />
 			<fileset dir="${app.server.lib.portal.dir}" includes="commons-digester.jar,commons-lang.jar,easyconf.jar" />
-			<fileset dir="lib" includes="*.jar" />
-			<pathelement location="classes" />
+			<fileset dir="docroot/WEB-INF/lib" includes="*.jar" />
+			<pathelement location="docroot/WEB-INF/classes" />
 		</path>
 
 		<if>
@@ -80,8 +82,7 @@
 		</if>
 
 
-		<property name="service.input.file" value="${basedir}/service.xml" />
-
+		<property name="service.input.file" value="${basedir}/docroot/WEB-INF/service.xml" />
 
 		<java
 			classname="com.liferay.portal.tools.servicebuilder.ServiceBuilder"
@@ -97,20 +98,20 @@
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
 			<arg value="service.input.file=${service.input.file}" />
-			<arg value="service.hbm.file=${basedir}/src/META-INF/portlet-hbm.xml" />
-			<arg value="service.orm.file=${basedir}/src/META-INF/portlet-orm.xml" />
-			<arg value="service.model.hints.file=${basedir}/src/META-INF/portlet-model-hints.xml" />
-			<arg value="service.spring.file=${basedir}/src/META-INF/portlet-spring.xml" />
-			<arg value="service.spring.base.file=${basedir}/src/META-INF/base-spring.xml" />
-			<arg value="service.spring.cluster.file=${basedir}/src/META-INF/cluster-spring.xml" />
-			<arg value="service.spring.dynamic.data.source.file=${basedir}/src/META-INF/dynamic-data-source-spring.xml" />
-			<arg value="service.spring.hibernate.file=${basedir}/src/META-INF/hibernate-spring.xml" />
-			<arg value="service.spring.infrastructure.file=${basedir}/src/META-INF/infrastructure-spring.xml" />
-			<arg value="service.spring.shard.data.source.file=${basedir}/src/META-INF/shard-data-source-spring.xml" />
-			<arg value="service.api.dir=${basedir}/service" />
-			<arg value="service.impl.dir=${basedir}/src" />
+			<arg value="service.hbm.file=${basedir}/docroot/WEB-INF/src/META-INF/portlet-hbm.xml" />
+			<arg value="service.orm.file=${basedir}/docroot/WEB-INF/src/META-INF/portlet-orm.xml" />
+			<arg value="service.model.hints.file=${basedir}/docroot/WEB-INF/src/META-INF/portlet-model-hints.xml" />
+			<arg value="service.spring.file=${basedir}/docroot/WEB-INF/src/META-INF/portlet-spring.xml" />
+			<arg value="service.spring.base.file=${basedir}/docroot/WEB-INF/src/META-INF/base-spring.xml" />
+			<arg value="service.spring.cluster.file=${basedir}/docroot/WEB-INF/src/META-INF/cluster-spring.xml" />
+			<arg value="service.spring.dynamic.data.source.file=${basedir}/docroot/WEB-INF/src/META-INF/dynamic-data-source-spring.xml" />
+			<arg value="service.spring.hibernate.file=${basedir}/docroot/WEB-INF/src/META-INF/hibernate-spring.xml" />
+			<arg value="service.spring.infrastructure.file=${basedir}/docroot/WEB-INF/src/META-INF/infrastructure-spring.xml" />
+			<arg value="service.spring.shard.data.source.file=${basedir}/docroot/WEB-INF/src/META-INF/shard-data-source-spring.xml" />
+			<arg value="service.api.dir=${basedir}/docroot/WEB-INF/service" />
+			<arg value="service.impl.dir=${basedir}/docroot/WEB-INF/src" />
 			<arg value="service.json.file=${basedir}/docroot/js/service.js" />
-			<arg value="service.sql.dir=${basedir}/sql" />
+			<arg value="service.sql.dir=${basedir}/docroot/WEB-INF/sql" />
 			<arg value="service.sql.file=tables.sql" />
 			<arg value="service.sql.indexes.file=indexes.sql" />
 			<arg value="service.sql.indexes.properties.file=indexes.properties" />
@@ -140,27 +141,27 @@
 			</then>
 		</if>
 
-		<mkdir dir="service-classes" />
+		<mkdir dir="docroot/WEB-INF/service-classes" />
 
 		<path id="service.classpath">
 			<path refid="lib.classpath" />
 			<fileset dir="${app.server.lib.global.dir}" includes="*.jar" />
-			<fileset dir="lib" excludes="${plugin.name}-service.jar" includes="*.jar" />
+			<fileset dir="docroot/WEB-INF/lib" excludes="${plugin.name}-service.jar" includes="*.jar" />
 		</path>
 
 		<antcall target="compile-java">
 			<param name="javac.classpathref" value="service.classpath" />
-			<param name="javac.destdir" value="service-classes" />
-			<param name="javac.srcdir" value="service" />
+			<param name="javac.destdir" value="docroot/WEB-INF/service-classes" />
+			<param name="javac.srcdir" value="docroot/WEB-INF/service" />
 			<reference refid="service.classpath" torefid="service.classpath" />
 		</antcall>
 
 		<jar
-			basedir="service-classes"
-			destfile="lib/${plugin.name}-service.jar"
+			basedir="docroot/WEB-INF/service-classes"
+			destfile="docroot/WEB-INF/lib/${plugin.name}-service.jar"
 		/>
 
-		<delete dir="service-classes" />
+		<delete dir="docroot/WEB-INF/service-classes" />
 	</target>
 
 	<target name="clean">
@@ -191,7 +192,7 @@
 
 	<target name="deploy-dependencies">
 		<copy failonerror="false" todir="${auto.deploy.dir}">
-			<fileset dir="lib" includes="${osgi.dependencies}" />
+			<fileset dir="${osgi.plugin.lib.dir}" includes="${osgi.dependencies}" />
 		</copy>
 	</target>
 
