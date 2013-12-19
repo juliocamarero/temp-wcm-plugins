@@ -56,6 +56,31 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 		return _userSegmentService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.addUserSegment(name, description,
+			serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.getUserSegments(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.getUserSegmentsCount(groupId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

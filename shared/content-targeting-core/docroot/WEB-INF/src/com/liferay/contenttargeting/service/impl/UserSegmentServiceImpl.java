@@ -14,7 +14,15 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * The implementation of the user segment remote service.
@@ -32,10 +40,27 @@ import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
  */
 public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.UserSegmentServiceUtil} to access the user segment remote service.
-	 */
+	@Override
+	public UserSegment addUserSegment(
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.addUserSegment(
+			getUserId(), name, description, serviceContext);
+	}
+
+	@Override
+	public List<UserSegment> getUserSegments(long groupId)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.getUserSegments(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.getUserSegmentsCount(groupId);
+	}
 
 }
