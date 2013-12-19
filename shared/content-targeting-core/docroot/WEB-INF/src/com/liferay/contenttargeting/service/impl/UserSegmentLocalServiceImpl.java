@@ -30,10 +30,13 @@ import com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl
  * @see com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl
  * @see com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil
  */
-public class UserSegmentLocalServiceImpl extends UserSegmentLocalServiceBaseImpl {
-	/*
+public class UserSegmentLocalServiceImpl
+	extends UserSegmentLocalServiceBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil} to access the user segment local service.
 	 */
+
 }
