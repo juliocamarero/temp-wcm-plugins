@@ -16,14 +16,46 @@
 
 <#include "init.ftl" />
 
-<div class="portlet" id="portlet_${plid}">
-	<div class="portlet-topper">
-		<h1 class="portlet-title">
-			<span class="portlet-title-text">${portlet_display.getTitle()}</span>
-		</h1>
-	</div>
+<#assign userSegmentService = serviceLocator.findService("com.liferay.portal.service.UserSegmentService")>
+<#assign userSegmentResults = userSegmentService.getUserSegments(themeDisplay.getScopeGroupId())>
+<#assign userSegmentResultsTotal = userSegmentService.getUserSegmentsCount(themeDisplay.getScopeGroupId())>
 
-	<div class="portlet-content">
-		Hello OSGi!
-	</div>
-</div>
+<@aui["nav-bar"]>
+	<@aui["nav"]>
+		<#assign editUserSegmentURL = renderResponse.createRenderURL()>
+
+		${editUserSegmentURL.setParameter("mvcPath", "/html/user_segment/edit_user_segment.ftl")}
+		${editUserSegmentURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
+
+		<@aui["nav-item"] href="${editUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
+	</@>
+</@>
+
+<#assign iteratorURL = renderResponse.createRenderURL()>
+
+<@liferay_ui["search-container"]
+	emptyResultsMessage="no-user-segment-were-found"
+	iteratorURL=iteratorURL
+>
+    <@liferay_ui["search-container-results"]
+		results=userSegmentResults
+		total=userSegmentResultsTotal
+	/>
+
+    <@liferay_ui["search-container-row"]
+		className="com.liferay.portal.model.UserSegment"
+		modelVar="userSegment"
+	>
+        <@liferay_ui["search-container-column-text"]
+			name="name"
+			value=userSegment.getName()
+		/>
+
+		<@liferay_ui["search-container-column-text"]
+			name="description"
+			value=userSegment.getDescription()
+		/>
+    </@>
+
+    <@liferay_ui["search-iterator"] />
+</@>

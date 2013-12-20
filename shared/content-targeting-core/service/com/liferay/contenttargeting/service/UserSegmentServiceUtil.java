@@ -63,6 +63,14 @@ public class UserSegmentServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.contenttargeting.model.UserSegment addUserSegment(
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addUserSegment(name, description, serviceContext);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

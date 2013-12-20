@@ -14,7 +14,12 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import aQute.bnd.annotation.component.Component;
+import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * The implementation of the user segment remote service.
@@ -31,4 +36,14 @@ import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.UserSegmentServiceUtil
  */
 public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
+
+	@Override
+	public UserSegment addUserSegment(
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.addUserSegment(
+			getUserId(), name, description, serviceContext);
+	}
+
 }

@@ -24,7 +24,27 @@
           <root url="jar://$MODULE_DIR$/../../lib/portal-service.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/osgi/bootstrap/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/tools/cobertura-agent/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/classes" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-java/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-java/test/unit" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-web/test/functional" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-web/classes/tomcat" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-slf4j/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-impl/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-impl/test/unit" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-impl/test/integration" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-pacl/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-taglib/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-bridges/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/support-resin/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-service/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-service/test/unit" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/support-tomcat/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/support-websphere/src" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -33,7 +53,27 @@
           <root url="jar://$MODULE_DIR$/../../lib/util-bridges.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/osgi/bootstrap/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/tools/cobertura-agent/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/classes" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-java/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-java/test/unit" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-web/test/functional" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-web/classes/tomcat" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-slf4j/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-impl/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-impl/test/unit" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-impl/test/integration" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-pacl/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-taglib/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/util-bridges/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/support-resin/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-service/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/portal-service/test/unit" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/support-tomcat/src" />
+          <root url="file://$MODULE_DIR$/../../../6.2.x/portal/support-websphere/src" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -55,6 +95,25 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="portal-6.2.x" level="project" />
+    <orderEntry type="module" module-name="content-targeting-core" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/javax.servlet-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../6.2.x/portal/lib/global/portlet.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

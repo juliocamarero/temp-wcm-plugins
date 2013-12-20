@@ -14,6 +14,13 @@
 
 package com.liferay.contenttargeting.service.http;
 
+import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.contenttargeting.service.UserSegmentServiceUtil} service utility. The
@@ -55,4 +62,22 @@ package com.liferay.contenttargeting.service.http;
  * @generated
  */
 public class UserSegmentServiceSoap {
+	public static com.liferay.contenttargeting.model.UserSegmentSoap addUserSegment(
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.contenttargeting.model.UserSegment returnValue = UserSegmentServiceUtil.addUserSegment(name,
+					description, serviceContext);
+
+			return com.liferay.contenttargeting.model.UserSegmentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(UserSegmentServiceSoap.class);
 }

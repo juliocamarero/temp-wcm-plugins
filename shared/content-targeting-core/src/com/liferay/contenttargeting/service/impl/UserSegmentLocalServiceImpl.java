@@ -39,6 +39,7 @@ import java.util.Date;
  * @see com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl
  * @see com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil
  */
+
 public class UserSegmentLocalServiceImpl
 		extends UserSegmentLocalServiceBaseImpl {
 
