@@ -14,16 +14,51 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.api.model.RulesRegistry;
-import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.UserSegment;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.UserSegmentServiceUtil;
 import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 /**
  * @author Eduardo Garcia
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
-	private RulesRegistry _rulesRegistry =
-		RulesRegistryFactory.getRulesRegistryFactory();
+	public void addUserSegment(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		String name = ParamUtil.getString(request, "name");
+		String description = ParamUtil.getString(request, "description");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			UserSegment.class.getName(), request);
+
+		try {
+			UserSegmentServiceUtil.addUserSegment(
+				name, description, serviceContext);
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", "/html/user_segment/edit_user_segment.ftl");
+			}
+			else {
+				response.setRenderParameter("mvcPath", "/error.ftl");
+			}
+		}
+	}
 
 }
