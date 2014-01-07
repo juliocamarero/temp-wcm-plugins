@@ -16,14 +16,54 @@
 
 <#include "init.ftl" />
 
-<div class="portlet" id="portlet_${plid}">
-	<div class="portlet-topper">
-		<h1 class="portlet-title">
-			<span class="portlet-title-text">${portlet_display.getTitle()}</span>
-		</h1>
-	</div>
+<#assign userSegmentService = serviceLocator.findService("content-targeting-core", "com.liferay.contenttargeting.service.UserSegmentService")>
+<#assign userSegmentResults = userSegmentService.getUserSegments(themeDisplay.getScopeGroupId())>
 
-	<div class="portlet-content">
-		Hello OSGi!
-	</div>
-</div>
+<@aui["nav-bar"]>
+	<@aui["nav"]>
+		<#assign editUserSegmentURL = renderResponse.createRenderURL()>
+
+		${editUserSegmentURL.setParameter("mvcPath", "/html/user_segment/edit_user_segment.ftl")}
+		${editUserSegmentURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
+
+		<@aui["nav-item"] href="${editUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
+	</@>
+</@>
+
+<#assign iteratorURL = renderResponse.createRenderURL()>
+
+<@liferay_ui["search-container"]
+	emptyResultsMessage="no-user-segment-were-found"
+	iteratorURL=iteratorURL
+>
+	<@liferay_ui["search-container-results"]
+		results=userSegmentResults
+		total=userSegmentResults?size
+	/>
+
+	<@liferay_ui["search-container-row"]
+		className="com.liferay.contenttargeting.model.UserSegment"
+		modelVar="userSegment"
+	>
+
+		<#assign rowURL = renderResponse.createRenderURL()>
+
+		${rowURL.setParameter("mvcPath", "/html/user_segment/edit_user_segment.ftl")}
+		${rowURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
+		${rowURL.setParameter("userSegmentId", userSegment.getSegmentId()?string)}
+
+		<@liferay_ui["search-container-column-text"]
+			name="name"
+			href=rowURL
+			value=userSegment.getName()
+		/>
+
+		<@liferay_ui["search-container-column-text"]
+			name="description"
+			href=rowURL
+			value=userSegment.getDescription()
+		/>
+	</@>
+
+	<@liferay_ui["search-iterator"] />
+</@>
