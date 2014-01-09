@@ -1,4 +1,3 @@
-<%
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,30 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.contenttargeting;
 
-<portlet:defineObjects />
+import com.liferay.portal.NoSuchModelException;
 
-This is the <b>Content Targeting</b> portlet.
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class NoSuchUserException extends NoSuchModelException {
+
+	public NoSuchUserException() {
+		super();
+	}
+
+	public NoSuchUserException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchUserException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchUserException(Throwable cause) {
+		super(cause);
+	}
+
+}
