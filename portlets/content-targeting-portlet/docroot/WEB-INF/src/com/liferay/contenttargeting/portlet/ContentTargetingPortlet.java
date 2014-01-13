@@ -70,15 +70,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		try {
-			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.getService();
-
-			if (userSegmentService == null) {
-				throw new UnavailableException(
-					"Can't find a reference to " + UserSegmentService.class, 0);
-			}
-
-			userSegmentService.deleteUserSegment(userSegmentId);
+			_userSegmentService.deleteUserSegment(userSegmentId);
 
 			String redirect = ParamUtil.getString(request, "redirect");
 
@@ -116,42 +108,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			};
 		}
 
-		final BundleContext bundleContext = bundle.getBundleContext();
-
-		_userSegmentLocalServiceTracker =
-			new ServiceTracker
-					<UserSegmentLocalService, UserSegmentLocalService>(
-						bundleContext, UserSegmentLocalService.class, null);
-
-		_userSegmentLocalServiceTracker.open();
-
-		_userSegmentServiceTracker =
-			new ServiceTracker<UserSegmentService, UserSegmentService>(
-				bundleContext, UserSegmentService.class, null);
-
-		_userSegmentServiceTracker.open();
-
-		try {
-			UserSegmentLocalService userSegmentLocalService =
-				_userSegmentLocalServiceTracker.waitForService(5 * 1000);
-
-			if (userSegmentLocalService == null) {
-				throw new UnavailableException(
-					"Can't find a reference to " +
-						UserSegmentLocalService.class, 0);
-			}
-
-			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.waitForService(5 * 1000);
-
-			if (userSegmentService == null) {
-				throw new UnavailableException(
-					"Can't find a reference to " + UserSegmentService.class, 0);
-			}
-		}
-		catch (InterruptedException e) {
-			throw new UnavailableException(e.getMessage());
-		}
+		initServices(bundle);
 	}
 
 	public void updateUserSegment(
@@ -172,20 +129,12 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.getService();
-
-			if (userSegmentService == null) {
-				throw new UnavailableException(
-					"Can't find a reference to " + UserSegmentService.class, 0);
-			}
-
 			if (userSegmentId > 0) {
-				userSegmentService.updateUserSegment(
+				_userSegmentService.updateUserSegment(
 					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				userSegmentService.addUserSegment(
+				_userSegmentService.addUserSegment(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					serviceContext);
 			}
@@ -260,11 +209,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("userSegmentClass", UserSegment.class);
 				template.put(
-					"userSegmentLocalService",
-					_userSegmentLocalServiceTracker.getService());
-				template.put(
-					"userSegmentService",
-					_userSegmentServiceTracker.getService());
+					"userSegmentLocalService", _userSegmentLocalService);
+				template.put("userSegmentService", _userSegmentService);
 
 				Writer writer = null;
 
@@ -292,12 +238,55 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	private void initServices(Bundle bundle) throws UnavailableException {
+		final BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
+			userSegmentLocalServiceTracker =
+				new ServiceTracker
+					<UserSegmentLocalService, UserSegmentLocalService>(
+					bundleContext, UserSegmentLocalService.class, null);
+
+		userSegmentLocalServiceTracker.open();
+
+		ServiceTracker<UserSegmentService, UserSegmentService>
+			userSegmentServiceTracker =
+				new ServiceTracker<UserSegmentService, UserSegmentService>(
+					bundleContext, UserSegmentService.class, null);
+
+		userSegmentServiceTracker.open();
+
+		try {
+			_userSegmentLocalService =
+				userSegmentLocalServiceTracker.waitForService(
+					_SERVICE_TRACKER_TIMEOUT);
+
+			if (_userSegmentLocalService == null) {
+				throw new UnavailableException(
+					"Can't find a reference to " +
+						UserSegmentLocalService.class, 0);
+			}
+
+			_userSegmentService =
+				userSegmentServiceTracker.waitForService(
+					_SERVICE_TRACKER_TIMEOUT);
+
+			if (_userSegmentService == null) {
+				throw new UnavailableException(
+					"Can't find a reference to " + UserSegmentService.class, 0);
+			}
+		}
+		catch (InterruptedException e) {
+			throw new UnavailableException(e.getMessage());
+		}
+	}
+
+	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
-		_userSegmentLocalServiceTracker;
-	private ServiceTracker<UserSegmentService, UserSegmentService>
-		_userSegmentServiceTracker;
+	private UserSegmentLocalService _userSegmentLocalService;
+	private UserSegmentService _userSegmentService;
 
 }
