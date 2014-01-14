@@ -14,13 +14,9 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
-import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
-import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,9 +51,15 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.UnavailableException;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eduardo Garcia
+ * @author Carlos Sierra Andrés
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
@@ -68,7 +70,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		try {
-			UserSegmentServiceUtil.deleteUserSegment(userSegmentId);
+			_userSegmentService.deleteUserSegment(userSegmentId);
 
 			String redirect = ParamUtil.getString(request, "redirect");
 
@@ -87,6 +89,28 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	@Override
+	public void init() throws PortletException {
+		super.init();
+
+		PortletContext portletContext = getPortletContext();
+
+		Bundle bundle = (Bundle)portletContext.getAttribute("OSGI_BUNDLE");
+
+		if (bundle == null) {
+			throw new UnavailableException(
+				"Can't find a reference to the OSGi bundle") {
+
+				@Override
+				public boolean isPermanent() {
+					return true;
+				}
+			};
+		}
+
+		initServices(bundle);
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -94,7 +118,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -106,11 +130,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		try {
 			if (userSegmentId > 0) {
-				UserSegmentServiceUtil.updateUserSegment(
+				_userSegmentService.updateUserSegment(
 					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				UserSegmentServiceUtil.addUserSegment(
+				_userSegmentService.addUserSegment(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					serviceContext);
 			}
@@ -185,17 +209,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("userSegmentClass", UserSegment.class);
 				template.put(
-					"userSegmentLocalService",
-					_findService(
-						"content-targeting-core",
-						UserSegmentLocalService.class.getName())
-				);
-				template.put(
-					"userSegmentService",
-					_findService(
-						"content-targeting-core",
-						UserSegmentService.class.getName())
-				);
+					"userSegmentLocalService", _userSegmentLocalService);
+				template.put("userSegmentService", _userSegmentService);
 
 				Writer writer = null;
 
@@ -223,35 +238,55 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
-	// This code has been copied from ServiceLocator and it's a provisional way
-	// to retrieve the service beans
+	private void initServices(Bundle bundle) throws UnavailableException {
+		final BundleContext bundleContext = bundle.getBundleContext();
 
-	private Object _findService(String servletContextName, String serviceName) {
-		Object bean = null;
+		ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
+			userSegmentLocalServiceTracker =
+				new ServiceTracker
+					<UserSegmentLocalService, UserSegmentLocalService>(
+					bundleContext, UserSegmentLocalService.class, null);
+
+		userSegmentLocalServiceTracker.open();
+
+		ServiceTracker<UserSegmentService, UserSegmentService>
+			userSegmentServiceTracker =
+				new ServiceTracker<UserSegmentService, UserSegmentService>(
+					bundleContext, UserSegmentService.class, null);
+
+		userSegmentServiceTracker.open();
 
 		try {
-			bean = PortletBeanLocatorUtil.locate(
-				servletContextName, _getServiceName(serviceName));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+			_userSegmentLocalService =
+				userSegmentLocalServiceTracker.waitForService(
+					_SERVICE_TRACKER_TIMEOUT);
 
-		return bean;
+			if (_userSegmentLocalService == null) {
+				throw new UnavailableException(
+					"Can't find a reference to " +
+						UserSegmentLocalService.class, 0);
+			}
+
+			_userSegmentService =
+				userSegmentServiceTracker.waitForService(
+					_SERVICE_TRACKER_TIMEOUT);
+
+			if (_userSegmentService == null) {
+				throw new UnavailableException(
+					"Can't find a reference to " + UserSegmentService.class, 0);
+			}
+		}
+		catch (InterruptedException e) {
+			throw new UnavailableException(e.getMessage());
+		}
 	}
 
-	private String _getServiceName(String serviceName) {
-		if (!serviceName.endsWith(".velocity")) {
-			serviceName += ".velocity";
-		}
-
-		return serviceName;
-	}
+	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private RulesRegistry _rulesRegistry =
-		RulesRegistryFactory.getRulesRegistryFactory();
+	private UserSegmentLocalService _userSegmentLocalService;
+	private UserSegmentService _userSegmentService;
 
 }
