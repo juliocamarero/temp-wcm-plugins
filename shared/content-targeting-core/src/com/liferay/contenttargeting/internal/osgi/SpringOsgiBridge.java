@@ -12,28 +12,26 @@
  * details.
  */
 
-package com.liferay.contenttargeting.portlet.internal;
+package com.liferay.contenttargeting.internal.osgi;
 
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 
-import com.liferay.contenttargeting.api.model.RulesRegistry;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
- * @author Eduardo Garcia
+ * @author Carlos Sierra Andrés
  */
-@Component(immediate = true)
-public class RulesRegistryFactory {
+public class SpringOsgiBridge
+	implements ApplicationListener<ContextRefreshedEvent> {
 
-	public static RulesRegistry getRulesRegistryFactory() {
-		return _rulesRegistry;
+	@Override
+	public void onApplicationEvent(
+		ContextRefreshedEvent contextRefreshedEvent) {
+
+		MessageBusUtil.sendMessage(
+			ContentTargetingActivator.DESTINATION_NAME,
+			contextRefreshedEvent.getApplicationContext());
 	}
-
-	@Reference(type = '?', unbind ="setRulesRegistry")
-	public void setRulesRegistry(RulesRegistry rulesRegistry) {
-		_rulesRegistry = rulesRegistry;
-	}
-
-	private static RulesRegistry _rulesRegistry;
 
 }

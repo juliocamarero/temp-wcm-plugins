@@ -14,13 +14,9 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
-import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
-import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.contenttargeting.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,9 +51,13 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.UnavailableException;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Eduardo Garcia
+ * @author Carlos Sierra Andrés
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
@@ -68,7 +68,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		try {
-			UserSegmentServiceUtil.deleteUserSegment(userSegmentId);
+			UserSegmentService userSegmentService =
+				_serviceTrackerUtil.getUserSegmentService();
+
+			userSegmentService.deleteUserSegment(userSegmentId);
 
 			String redirect = ParamUtil.getString(request, "redirect");
 
@@ -81,6 +84,28 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	@Override
+	public void init() throws PortletException {
+		super.init();
+
+		PortletContext portletContext = getPortletContext();
+
+		Bundle bundle = (Bundle)portletContext.getAttribute("OSGI_BUNDLE");
+
+		if (bundle == null) {
+			throw new UnavailableException(
+				"Can't find a reference to the OSGi bundle") {
+
+				@Override
+				public boolean isPermanent() {
+					return true;
+				}
+			};
+		}
+
+		_serviceTrackerUtil.initServices(bundle);
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -88,7 +113,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -98,13 +123,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		UserSegmentService userSegmentService =
+			_serviceTrackerUtil.getUserSegmentService();
+
 		try {
 			if (userSegmentId > 0) {
-				UserSegmentServiceUtil.updateUserSegment(
+				userSegmentService.updateUserSegment(
 					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				UserSegmentServiceUtil.addUserSegment(
+				userSegmentService.addUserSegment(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					serviceContext);
 			}
@@ -180,16 +208,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				template.put("userSegmentClass", UserSegment.class);
 				template.put(
 					"userSegmentLocalService",
-					_findService(
-						"content-targeting-core",
-						UserSegmentLocalService.class.getName())
-				);
+					_serviceTrackerUtil.getUserSegmentLocalService());
 				template.put(
 					"userSegmentService",
-					_findService(
-						"content-targeting-core",
-						UserSegmentService.class.getName())
-				);
+					_serviceTrackerUtil.getUserSegmentService());
 
 				Writer writer = null;
 
@@ -217,35 +239,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
-	// This code has been copied from ServiceLocator and it's a provisional way
-	// to retrieve the service beans
-
-	private Object _findService(String servletContextName, String serviceName) {
-		Object bean = null;
-
-		try {
-			bean = PortletBeanLocatorUtil.locate(
-				servletContextName, _getServiceName(serviceName));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return bean;
-	}
-
-	private String _getServiceName(String serviceName) {
-		if (!serviceName.endsWith(".velocity")) {
-			serviceName += ".velocity";
-		}
-
-		return serviceName;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private RulesRegistry _rulesRegistry =
-		RulesRegistryFactory.getRulesRegistryFactory();
+	private ServiceTrackerUtil _serviceTrackerUtil = new ServiceTrackerUtil();
 
 }

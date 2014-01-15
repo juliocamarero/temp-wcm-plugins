@@ -11,31 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.contenttargeting.rules.time;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
+package com.liferay.contenttargeting.util;
 
-import com.liferay.contenttargeting.api.model.Rule;
+import javax.portlet.UnavailableException;
 
 /**
- * @author Julio Camarero
+ * @author Eduardo Garcia
  */
-@Component(immediate = true)
-public class TimeRule implements Rule {
+public class UnavailableServiceException extends UnavailableException {
 
-	@Activate
-	public void activate() {
-	}
-
-	@Deactivate
-	public void deActivate() {
-	}
-
-	@Override
-	public String getName() {
-		return "time";
+	public UnavailableServiceException(Class clazz) {
+		super("Can't find a reference to " + clazz, 0);
 	}
 
 }

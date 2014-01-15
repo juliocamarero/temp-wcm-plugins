@@ -5,10 +5,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
 >
-	<info module="content-targeting-core" organisation="com.liferay" />
+	<info module="http-service-shared" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
-		<dependency org="biz.aQute.bnd"	name="bnd" rev="2.2.0" />
+		<dependency name="org.osgi.compendium" org="org.osgi" rev="4.3.1" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
 	</dependencies>
 </ivy-module>
