@@ -54,6 +54,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
 
+import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.TemplateHashModel;
 import org.osgi.framework.Bundle;
 
 /**
@@ -203,6 +205,17 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				template.put(
 					"userInfo",
 					portletRequest.getAttribute(PortletRequest.USER_INFO));
+
+				// Injecting static models into the template context
+
+				BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+
+				TemplateHashModel staticModels = wrapper.getStaticModels();
+
+				template.put(
+					"staticClassTest",
+					staticModels.get(
+						"com.liferay.contenttargeting.util.StaticClassTest"));
 
 				// Injecting services into the template context
 

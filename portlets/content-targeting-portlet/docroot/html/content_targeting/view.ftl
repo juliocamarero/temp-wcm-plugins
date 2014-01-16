@@ -16,6 +16,8 @@
 
 <#include "../init.ftl" />
 
+<h1>${staticClassTest.MYSTATICSTRING}</h1>
+
 <#assign userSegmentResults = userSegmentService.getUserSegments(themeDisplay.getScopeGroupId())>
 
 <@aui["nav-bar"]>
