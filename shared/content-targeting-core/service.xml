@@ -38,11 +38,11 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
-	<entity name="Rule" uuid="true" local-service="true" remote-service="true">
+	<entity name="RuleInstance" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="ruleId" type="long" primary="true" />
+		<column name="ruleInstanceId" type="long" primary="true" />
 
 		<!-- Group instance -->
 
@@ -58,14 +58,14 @@
 
 		<!-- Other fields -->
 
-		<column name="segmentId" type="long" />
-		<column name="type" type="String" />
+		<column name="ruleKey" type="String" />
+		<column name="userSegmentId" type="long" />
 		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="type" />
+			<order-column name="ruleKey" />
 		</order>
 
 		<!-- Finder methods -->

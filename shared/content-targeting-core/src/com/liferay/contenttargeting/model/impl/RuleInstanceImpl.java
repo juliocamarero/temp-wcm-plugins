@@ -12,29 +12,20 @@
  * details.
  */
 
-package com.liferay.contenttargeting;
-
-import com.liferay.portal.NoSuchModelException;
+package com.liferay.contenttargeting.model.impl;
 
 /**
+ * The extended model implementation for the RuleInstance service. Represents a row in the &quot;CT_RuleInstance&quot; database table, with each column mapped to a property of this class.
+ *
+ * <p>
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.contenttargeting.model.RuleInstance} interface.
+ * </p>
+ *
  * @author Brian Wing Shun Chan
  */
-public class NoSuchRuleException extends NoSuchModelException {
+public class RuleInstanceImpl extends RuleInstanceBaseImpl {
 
-	public NoSuchRuleException() {
-		super();
-	}
-
-	public NoSuchRuleException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchRuleException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NoSuchRuleException(Throwable cause) {
-		super(cause);
+	public RuleInstanceImpl() {
 	}
 
 }
