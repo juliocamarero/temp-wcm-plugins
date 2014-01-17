@@ -26,6 +26,9 @@ public class ContentTargetingPath {
 
 	public static final String ERROR = "html/error.ftl";
 
+	public static final String USER_SEGMENT_ACTIONS =
+		"html/content_targeting/user_segment_actions.ftl";
+
 	public static final String VIEW = "html/content_targeting/view.ftl";
 
 }

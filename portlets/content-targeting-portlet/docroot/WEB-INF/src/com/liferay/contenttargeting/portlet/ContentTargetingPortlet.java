@@ -19,6 +19,8 @@ import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.ServiceTrackerUtil;
+import com.liferay.portal.kernel.dao.search.ResultRow;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,6 +61,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
@@ -299,6 +302,22 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				userSegment = userSegmentLocalService.getUserSegment(
 					userSegmentId);
 			}
+
+			template.put("userSegment", userSegment);
+		}
+		else if (path.equals(ContentTargetingPath.USER_SEGMENT_ACTIONS)) {
+			SearchContainer searchContainer =
+				(SearchContainer)portletRequest.getAttribute(
+					"liferay-ui:search:searchContainer");
+
+			PortletURL redirectPortletURL = searchContainer.getIteratorURL();
+
+			template.put("redirect", redirectPortletURL.toString());
+
+			ResultRow row = (ResultRow)portletRequest.getAttribute(
+				WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+			UserSegment userSegment = (UserSegment)row.getObject();
 
 			template.put("userSegment", userSegment);
 		}

@@ -53,32 +53,10 @@
 			value=userSegment.getDescription()
 		/>
 
-		<@liferay_ui["search-container-column-text"]
-			name=""
-		>
-			<@liferay_ui["icon-menu"]>
-				<@portlet["renderURL"] var="editUserSegmentURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
-					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-				</@>
-
-				<@liferay_ui["icon"]
-					image="edit"
-					method="get"
-					url="${editUserSegmentURL}"
-				/>
-
-				<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
-					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-				</@>
-
-				<@liferay_ui["icon-delete"]
-					url="${deleteUserSegmentURL}"
-				/>
-			</@>
-		</@>
+		<@liferay_ui["search-container-column-jsp"]
+			align="right"
+			path="/${contentTargetingPath.USER_SEGMENT_ACTIONS}"
+		/>
 	</@>
 
 	<@liferay_ui["search-iterator"] />
