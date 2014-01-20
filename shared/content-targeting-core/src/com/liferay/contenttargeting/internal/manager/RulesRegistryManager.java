@@ -20,8 +20,8 @@ import aQute.bnd.annotation.component.Reference;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eudaldo Alonso
@@ -29,20 +29,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class RulesRegistryManager implements RulesRegistry {
 
+	public Rule getRule(String ruleKey) {
+		return _rules.get(ruleKey);
+	}
+
 	@Override
-	public List<Rule> getRules() {
+	public Map<String, Rule> getRules() {
 		return _rules;
 	}
 
 	@Reference(type = '*', unbind = "unregisterRule")
 	public void registerRule(Rule rule) {
-		_rules.add(rule);
+		_rules.put(rule.getRuleKey(), rule);
 	}
 
 	public void unregisterRule(Rule rule) {
 		_rules.remove(rule);
 	}
 
-	private List<Rule> _rules = new CopyOnWriteArrayList<Rule>();
+	private Map<String, Rule> _rules = new ConcurrentHashMap<String, Rule>();
 
 }

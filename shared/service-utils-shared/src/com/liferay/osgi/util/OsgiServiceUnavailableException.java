@@ -12,15 +12,26 @@
  * details.
  */
 
-package com.liferay.contenttargeting.api.model;
+package com.liferay.osgi.util;
 
-import java.util.Map;
+import javax.naming.ServiceUnavailableException;
 
 /**
- * @author Eudaldo Alonso
+ * @author Carlos Sierra Andrés
  */
-public interface RulesRegistry {
+public class OsgiServiceUnavailableException
+	extends ServiceUnavailableException {
 
-	public Map<String, Rule> getRules();
+	public OsgiServiceUnavailableException(Class<?> clazz) {
+		super(clazz.toString());
+
+		this._clazz = clazz;
+	}
+
+	public Class<?> getUnavailableServiceClass() {
+		return _clazz;
+	}
+
+	private Class<?> _clazz;
 
 }
