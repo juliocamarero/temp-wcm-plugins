@@ -16,6 +16,12 @@ package com.liferay.contenttargeting.api.model;
 
 import com.liferay.contenttargeting.model.RuleInstance;
 
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -23,10 +29,17 @@ public interface Rule {
 
 	public boolean evaluate(RuleInstance ruleInstance);
 
+	public String getFormHTML(
+		RuleInstance ruleInstance, Map<String, Object> context);
+
 	public String getIcon();
 
 	public String getName();
 
 	public String getRuleKey();
+
+	public String getSummary(RuleInstance ruleInstance, Locale locale);
+
+	public String processRule(PortletRequest request, PortletResponse response);
 
 }

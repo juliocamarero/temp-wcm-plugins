@@ -16,7 +16,10 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.RuleInstanceLocalService;
+import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.UnavailableServiceException;
@@ -51,6 +54,8 @@ import freemarker.template.TemplateHashModel;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,6 +76,26 @@ import org.osgi.framework.Bundle;
  * @author Carlos Sierra Andrés
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
+
+	public void deleteRuleInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
+
+		try {
+			_ruleInstanceService.deleteRuleInstance(ruleInstanceId);
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
 
 	public void deleteUserSegment(
 			ActionRequest request, ActionResponse response)
@@ -112,6 +137,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 
 		try {
+			_ruleInstanceService = ServiceTrackerUtil.getService(
+				RuleInstanceService.class, bundle.getBundleContext());
+			_ruleInstanceLocalService = ServiceTrackerUtil.getService(
+				RuleInstanceLocalService.class, bundle.getBundleContext());
 			_userSegmentService = ServiceTrackerUtil.getService(
 				UserSegmentService.class, bundle.getBundleContext());
 			_userSegmentLocalService = ServiceTrackerUtil.getService(
@@ -125,6 +154,55 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	public void updateRuleInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				RuleInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String ruleKey = ParamUtil.getString(request, "ruleKey");
+
+		Rule rule = _rulesRegistry.getRule(ruleKey);
+
+		String typeSettings = rule.processRule(request, response);
+
+		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+
+		try {
+			if (ruleInstanceId > 0) {
+				_ruleInstanceService.updateRuleInstance(
+						ruleInstanceId, typeSettings, serviceContext);
+			}
+			else {
+				_ruleInstanceService.addRuleInstance(
+						themeDisplay.getUserId(), ruleKey, userSegmentId,
+						typeSettings, serviceContext);
+			}
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
+		}
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -132,7 +210,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -277,9 +355,32 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 			template.put("userSegments", userSegments);
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_RULE)) {
+		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE)) {
+			template.put("ruleInstanceClass", RuleInstance.class);
+
+			RuleInstance ruleInstance = null;
+
+			long ruleInstanceId = ParamUtil.getLong(
+				portletRequest, "ruleInstanceId");
+
+			if (ruleInstanceId > 0) {
+				ruleInstance = _ruleInstanceLocalService.getRuleInstance(
+					ruleInstanceId);
+
+				template.put("ruleInstance", ruleInstance);
+			}
+
+			String ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
+
+			Rule rule = _rulesRegistry.getRule(ruleKey);
+
+			String ruleFormHTML = rule.getFormHTML(
+				ruleInstance, _cloneTemplateContext(template));
+
+			template.put("ruleFormHTML", ruleFormHTML);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+			template.put("rulesRegistry", _rulesRegistry);
 			template.put("userSegmentClass", UserSegment.class);
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
@@ -294,15 +395,35 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			if (userSegmentId > 0) {
 				userSegment = _userSegmentLocalService.getUserSegment(
 					userSegmentId);
+
+				List<RuleInstance> ruleInstances =
+					_ruleInstanceService.getRuleInstances(userSegmentId);
+
+				template.put("ruleInstances", ruleInstances);
+			}
+			else {
+				template.put("ruleInstances", new ArrayList<RuleInstance>());
 			}
 
 			template.put("userSegment", userSegment);
 		}
 	}
 
+	private Map<String, Object> _cloneTemplateContext(Template template) {
+		Map<String, Object> context = new HashMap<String, Object>();
+
+		for (String key : template.getKeys()) {
+			context.put(key, template.get(key));
+		}
+
+		return context;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
+	private RuleInstanceLocalService _ruleInstanceLocalService;
+	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentService _userSegmentService;

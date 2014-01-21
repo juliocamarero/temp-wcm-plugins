@@ -1,8 +1,6 @@
 Bundle-Icon: /icons/content_targeting.png;size=16
 Bundle-Localization: WEB-INF/classes/content/Language
 Bundle-Name: Content Targeting Portlet
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/
- util-taglib.jar
 DynamicImport-Package:\
 	org.apache.jasper.servlet,\
 	org.eclipse.jetty.servlet.listener
@@ -31,7 +29,6 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
-Private-Package: com.liferay.contenttargeting.portlet.internal
 Service-Component: com.liferay.contenttargeting.portlet.*
 Web-ContextPath: /content-targeting-portlet
 -wab: \
