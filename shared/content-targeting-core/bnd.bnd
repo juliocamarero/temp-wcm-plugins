@@ -50,6 +50,8 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
 	com.liferay.util.service,\
+	freemarker.cache,\
+	freemarker.template,\
 	javax.portlet,\
 	javax.sql,\
 	org.osgi.framework,\
