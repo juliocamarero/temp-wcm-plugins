@@ -24,23 +24,77 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
+ * Provides the Rule interface, allowing custom rule creation and evaluation
+ * for the Content Targeting Portlet.
+ *
  * @author Eudaldo Alonso
  */
 public interface Rule {
 
+	/**
+	 * Returns <code>true</code> if the user complies with the rule instance.
+	 *
+	 * @param  ruleInstance the rule instance with stored configuration
+	 * @param  ctUser the user who evaluates the rule
+	 * @return <code>true</code> if the user complies with the rule instance;
+	 *         <code>false</code> otherwise
+	 */
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser);
 
+	/**
+	 * Returns the HTML code containing the form fields required to edit the
+	 * rule instance's configuration, based on the context.
+	 *
+	 * @param  ruleInstance the rule instance with stored configuration
+	 * @param  context the map defining the form's evaluation context
+	 * @return the HTML code containing the form fields required to edit the
+	 *         rule instance's configuration, based on the context
+	 */
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context);
 
+	/**
+	 * Returns the Font Awesome CSS class for the rule's icon.
+	 *
+	 * @return the Font Awesome CSS class for the rule's icon
+	 * @see    <a href="http://fortawesome.github.io/Font-Awesome/3.2.1/">Font
+	 *         Awesome documentation</a>
+	 */
 	public String getIcon();
 
-	public String getName(Locale locale);
+	/**
+	 * Returns the rule's name.
+	 *
+	 * @return the rule's name
+	 */
+	public String getName();
 
+	/**
+	 * Returns the key that identifies the rule. The rule instances of this rule
+	 * are identified by their rule key.
+	 *
+	 * @return the key that identifies the rule
+	 */
 	public String getRuleKey();
 
+	/**
+	 * Returns the rule instance's localized summary.
+	 *
+	 * @param  ruleInstance the rule instance with stored configuration
+	 * @param  locale the language's locale
+	 * @return the rule instance's localized summary
+	 */
 	public String getSummary(RuleInstance ruleInstance, Locale locale);
 
+	/**
+	 * Returns the result of evaluating the rule's form fields in the context of
+	 * the request and response.
+	 *
+	 * @param  request the request from which to get the request parameters
+	 * @param  response the response to receive the render parameters
+	 * @return the result of evaluating the rule's form fields in the context of
+	 *         the request and response
+	 */
 	public String processRule(PortletRequest request, PortletResponse response);
 
 }
