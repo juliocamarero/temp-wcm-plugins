@@ -1,0 +1,10 @@
+Bundle-Name: Arquillian Plugin Deployer
+Export-Package: com.liferay.arquillian
+
+
+
+Web-ContextPath: /arquillian-deploy
+
+-wab: \
+	docroot
+
