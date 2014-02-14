@@ -14,7 +14,10 @@
 
 package com.liferay.contenttargeting.rules.scorepoints.service.impl;
 
+import com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint;
 import com.liferay.contenttargeting.rules.scorepoints.service.base.ScorePointLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the score point local service.
@@ -37,5 +40,76 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil} to access the score point local service.
 	 */
+
+	public ScorePoint addScorePoints(long ctUserId, long assetCategoryId)
+		throws SystemException {
+
+		return addScorePoints(ctUserId, assetCategoryId, 0);
+	}
+
+	public ScorePoint addScorePoints(
+			long ctUserId, long assetCategoryId, long points)
+		throws SystemException {
+
+		long scorePointId = CounterLocalServiceUtil.increment();
+
+		ScorePoint scorePoint = scorePointPersistence.create(scorePointId);
+
+		scorePoint.setCTUserId(ctUserId);
+		scorePoint.setAssetCategoryId(assetCategoryId);
+		scorePoint.setPoints(points);
+
+		scorePointPersistence.update(scorePoint);
+
+		return scorePoint;
+	}
+
+	public long getPoints(long ctUserId, long assetCategoryId)
+		throws SystemException {
+
+		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
+				ctUserId, assetCategoryId);
+
+		if (scorePoint == null) {
+			return 0;
+		}
+
+		return scorePoint.getPoints();
+	}
+
+	public long incrementPoints(
+			long ctUserId, long assetCategoryId, long points)
+		throws SystemException {
+
+		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
+			ctUserId, assetCategoryId);
+
+		if (scorePoint == null) {
+			scorePoint = scorePointLocalService.addScorePoints(
+				ctUserId, assetCategoryId);
+		}
+
+		long total = scorePoint.getPoints() + points;
+
+		scorePoint.setPoints(total);
+
+		scorePointPersistence.update(scorePoint);
+
+		return total;
+	}
+
+	public ScorePoint updateScorePoints(
+			long ctUserId, long assetCategoryId, long points)
+		throws SystemException {
+
+		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
+			ctUserId, assetCategoryId);
+
+		scorePoint.setPoints(points);
+
+		scorePointPersistence.update(scorePoint);
+
+		return scorePoint;
+	}
 
 }
