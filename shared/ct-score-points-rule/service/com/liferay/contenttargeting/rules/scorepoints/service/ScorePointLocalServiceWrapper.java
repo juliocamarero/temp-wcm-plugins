@@ -287,6 +287,47 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this interface directly. Always use {@link com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil} to access the score point local service.
+	*/
+	@Override
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
+		long ctUserId, long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.addScorePoints(ctUserId, assetCategoryId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
+		long ctUserId, long assetCategoryId, long points)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.addScorePoints(ctUserId,
+			assetCategoryId, points);
+	}
+
+	@Override
+	public long getPoints(long ctUserId, long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.getPoints(ctUserId, assetCategoryId);
+	}
+
+	@Override
+	public long incrementPoints(long ctUserId, long assetCategoryId, long points)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.incrementPoints(ctUserId,
+			assetCategoryId, points);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint updateScorePoints(
+		long ctUserId, long assetCategoryId, long points)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.updateScorePoints(ctUserId,
+			assetCategoryId, points);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public ScorePointLocalService getWrappedScorePointLocalService() {

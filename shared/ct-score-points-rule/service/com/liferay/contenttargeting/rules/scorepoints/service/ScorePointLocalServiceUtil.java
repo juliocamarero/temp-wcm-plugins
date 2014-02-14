@@ -274,6 +274,39 @@ public class ScorePointLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this interface directly. Always use {@link com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil} to access the score point local service.
+	*/
+	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
+		long ctUserId, long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().addScorePoints(ctUserId, assetCategoryId);
+	}
+
+	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
+		long ctUserId, long assetCategoryId, long points)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().addScorePoints(ctUserId, assetCategoryId, points);
+	}
+
+	public static long getPoints(long ctUserId, long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPoints(ctUserId, assetCategoryId);
+	}
+
+	public static long incrementPoints(long ctUserId, long assetCategoryId,
+		long points) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().incrementPoints(ctUserId, assetCategoryId, points);
+	}
+
+	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint updateScorePoints(
+		long ctUserId, long assetCategoryId, long points)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateScorePoints(ctUserId, assetCategoryId, points);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
