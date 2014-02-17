@@ -16,9 +16,12 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
+import com.liferay.contenttargeting.service.CampaignLocalService;
+import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
@@ -31,6 +34,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,7 +50,10 @@ import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
 
-import java.util.ArrayList;
+import java.text.Format;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +74,23 @@ import org.osgi.framework.FrameworkUtil;
  * @author Carlos Sierra Andrés
  */
 public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
+
+	public void deleteCampaign(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long campaignId = ParamUtil.getLong(request, "campaignId");
+
+		try {
+			_campaignService.deleteCampaign(campaignId);
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
 
 	public void deleteRuleInstance(
 			ActionRequest request, ActionResponse response)
@@ -121,20 +146,84 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 
 		try {
-			_ruleInstanceService = ServiceTrackerUtil.getService(
-				RuleInstanceService.class, bundle.getBundleContext());
+			_campaignLocalService = ServiceTrackerUtil.getService(
+				CampaignLocalService.class, bundle.getBundleContext());
+			_campaignService = ServiceTrackerUtil.getService(
+				CampaignService.class, bundle.getBundleContext());
 			_ruleInstanceLocalService = ServiceTrackerUtil.getService(
 				RuleInstanceLocalService.class, bundle.getBundleContext());
-			_userSegmentService = ServiceTrackerUtil.getService(
-				UserSegmentService.class, bundle.getBundleContext());
-			_userSegmentLocalService = ServiceTrackerUtil.getService(
-				UserSegmentLocalService.class, bundle.getBundleContext());
+			_ruleInstanceService = ServiceTrackerUtil.getService(
+				RuleInstanceService.class, bundle.getBundleContext());
 			_rulesRegistry = ServiceTrackerUtil.getService(
 				RulesRegistry.class, bundle.getBundleContext());
+			_userSegmentLocalService = ServiceTrackerUtil.getService(
+				UserSegmentLocalService.class, bundle.getBundleContext());
+			_userSegmentService = ServiceTrackerUtil.getService(
+				UserSegmentService.class, bundle.getBundleContext());
 		}
 		catch (OsgiServiceUnavailableException osue) {
 			throw new UnavailableServiceException(
 				osue.getUnavailableServiceClass());
+		}
+	}
+
+	public void updateCampaign(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long campaignId = ParamUtil.getLong(request, "campaignId");
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			request, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(request, "description");
+
+		Date startDate = _getDate(request, "startDate");
+		Date endDate = _getDate(request, "endDate");
+
+		int priority = ParamUtil.getInteger(request, "priority");
+
+		// First implementation: one user segment per campaign
+
+		long[] userSegmentIds = null;
+
+		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+
+		if (userSegmentId > 0) {
+			userSegmentIds = new long[] {userSegmentId};
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			UserSegment.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (campaignId > 0) {
+				_campaignService.updateCampaign(
+					campaignId, nameMap, descriptionMap, startDate, endDate,
+					priority, userSegmentIds, serviceContext);
+			}
+			else {
+				_campaignService.addCampaign(
+					themeDisplay.getUserId(), nameMap, descriptionMap,
+					startDate, endDate, priority, userSegmentIds,
+					serviceContext);
+			}
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
 		}
 	}
 
@@ -244,6 +333,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
+		template.put("campaignClass", Campaign.class);
 		template.put(
 			"contentTargetingPath",
 			staticModels.get(
@@ -253,6 +343,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("portletContext", getPortletContext());
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put(
+			"tabs1", ParamUtil.getString(portletRequest, "tabs1", "campaigns"));
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
@@ -267,12 +359,23 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<UserSegment> userSegments = _userSegmentService.getUserSegments(
+			themeDisplay.getScopeGroupId());
+
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW)) {
 			template.put(
 				"actionKeys",
 				staticModels.get(
 					"com.liferay.contenttargeting.util.ActionKeys"));
 
+			template.put(
+				"campaignPermission",
+				staticModels.get(
+					"com.liferay.contenttargeting.service.permission." +
+						"CampaignPermission"));
 			template.put(
 				"contentTargetingPermission",
 				staticModels.get(
@@ -284,14 +387,54 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.contenttargeting.service.permission." +
 						"UserSegmentPermission"));
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			List<Campaign> campaigns = _campaignService.getCampaigns(
+				themeDisplay.getScopeGroupId());
 
-			List<UserSegment> userSegments =
-				_userSegmentService.getUserSegments(
-					themeDisplay.getScopeGroupId());
+			template.put("campaigns", campaigns);
+			template.put("userSegments", userSegments);
 
+			Format displayFormatDate =
+				FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyy-MM-dd HH:mm", themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
+
+			template.put("displayFormatDate", displayFormatDate);
+		}
+		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
+			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
+
+			template.put("campaignId", campaignId);
+
+			int priority = 1;
+			long userSegmentId = -1;
+
+			if (campaignId > 0) {
+				Campaign campaign = _campaignLocalService.getCampaign(
+					campaignId);
+
+				template.put(
+					"campaign", _campaignLocalService.getCampaign(campaignId));
+
+				List<UserSegment> campaignUserSegments =
+					_userSegmentLocalService.getCampaignUserSegments(
+						campaignId);
+
+				priority = campaign.getPriority();
+
+				// First implementation: one user segment per campaign
+
+				if ((campaignUserSegments != null) &&
+					!campaignUserSegments.isEmpty()) {
+
+					UserSegment campaignUserSegment = campaignUserSegments.get(
+						0);
+
+					userSegmentId = campaignUserSegment.getUserSegmentId();
+				}
+			}
+
+			template.put("priority", priority);
+			template.put("userSegmentId", userSegmentId);
 			template.put("userSegments", userSegments);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE)) {
@@ -364,8 +507,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("ruleInstances", ruleInstances);
 
 				UserSegment userSegment =
-					_userSegmentLocalService.getUserSegment(
-						userSegmentId);
+					_userSegmentLocalService.getUserSegment(userSegmentId);
 
 				template.put("userSegment", userSegment);
 			}
@@ -382,9 +524,45 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return context;
 	}
 
+	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {
+		int dateMonth = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Month");
+		int dateDay = ParamUtil.getInteger(portletRequest, paramPrefix + "Day");
+		int dateYear = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Year");
+		int dateHour = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Hour");
+		int dateMinute = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "Minute");
+		int dateAmPm = ParamUtil.getInteger(
+			portletRequest, paramPrefix + "AmPm");
+
+		if (dateAmPm == Calendar.PM) {
+			dateHour += 12;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+				themeDisplay.getTimeZone(), themeDisplay.getLocale());
+
+		calendar.set(Calendar.MONTH, dateMonth);
+		calendar.set(Calendar.DATE, dateDay);
+		calendar.set(Calendar.YEAR, dateYear);
+		calendar.set(Calendar.HOUR_OF_DAY, dateHour);
+		calendar.set(Calendar.MINUTE, dateMinute);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
+	private CampaignLocalService _campaignLocalService;
+	private CampaignService _campaignService;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;

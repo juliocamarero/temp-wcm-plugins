@@ -18,7 +18,7 @@
 
 <@liferay_ui["header"]
 	backURL="${redirect}"
-	title="new-user-segment"
+	title='${(userSegment.getName(locale))!"new-user-segment"}'
 />
 
 <@portlet["actionURL"] name="updateUserSegment" var="addUserSegmentURL" />
@@ -29,7 +29,7 @@
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
-	<@aui["input"] name="name" />
+	<@aui["input"] name="name" required=true />
 
 	<@aui["input"] name="description" />
 

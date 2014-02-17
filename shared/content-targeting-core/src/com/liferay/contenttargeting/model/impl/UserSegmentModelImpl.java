@@ -155,6 +155,17 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		return models;
 	}
 
+	public static final String MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_NAME = "CT_Campaigns_UserSegments";
+	public static final Object[][] MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_COLUMNS =
+		{
+			{ "campaignId", Types.BIGINT },
+			{ "userSegmentId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_SQL_CREATE =
+		"create table CT_Campaigns_UserSegments (campaignId LONG not null,userSegmentId LONG not null,primary key (campaignId, userSegmentId))";
+	public static final boolean FINDER_CACHE_ENABLED_CT_CAMPAIGNS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.finder.cache.enabled.CT_Campaigns_UserSegments"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.contenttargeting.model.UserSegment"));
 
