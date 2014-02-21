@@ -5,7 +5,6 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/ext" />
-      <excludeFolder url="file://$MODULE_DIR$/hooks" />
       <excludeFolder url="file://$MODULE_DIR$/layouttpl" />
       <excludeFolder url="file://$MODULE_DIR$/themes" />
       <excludeFolder url="file://$MODULE_DIR$/tools" />
