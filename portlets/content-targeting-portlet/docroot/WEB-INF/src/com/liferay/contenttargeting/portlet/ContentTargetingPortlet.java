@@ -27,9 +27,11 @@ import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.contenttargeting.util.BaseModelSearchResult;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -398,15 +400,34 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.contenttargeting.service.permission." +
 						"UserSegmentPermission"));
 
-			List<Campaign> campaigns = _campaignService.getCampaigns(
-				themeDisplay.getScopeGroupId());
+			List<Campaign> campaigns = null;
+			List<UserSegment> userSegments = null;
+
+			String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+			if (Validator.isNull(keywords)) {
+				campaigns = _campaignService.getCampaigns(
+					themeDisplay.getScopeGroupId());
+				userSegments = _userSegmentService.getUserSegments(
+					themeDisplay.getScopeGroupId());
+			}
+			else {
+				BaseModelSearchResult<Campaign> campaignResults =
+					_campaignLocalService.searchCampaigns(
+						themeDisplay.getScopeGroupId(), keywords,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				campaigns = campaignResults.getBaseModels();
+
+				BaseModelSearchResult<UserSegment> userSegmentResults =
+					_userSegmentLocalService.searchUserSegments(
+						themeDisplay.getScopeGroupId(), keywords,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				userSegments = userSegmentResults.getBaseModels();
+			}
 
 			template.put("campaigns", campaigns);
-
-			List<UserSegment> userSegments =
-				_userSegmentService.getUserSegments(
-					themeDisplay.getScopeGroupId());
-
 			template.put("userSegments", userSegments);
 			template.put(
 				"usedUserSegmentExceptionClass",
