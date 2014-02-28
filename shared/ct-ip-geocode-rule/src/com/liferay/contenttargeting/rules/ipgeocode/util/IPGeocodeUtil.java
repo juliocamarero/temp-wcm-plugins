@@ -28,7 +28,7 @@ public class IPGeocodeUtil {
 	public static IPInfo getIPInfo(String ipAddress) {
 		Http.Options options = new Http.Options();
 
-		options.setLocation("http://freegeoip.net/json/" + ipAddress);
+		options.setLocation("http://freegeoip.net/json/" + "173.194.41.0");
 
 		try {
 			String text = HttpUtil.URLtoString(options);
