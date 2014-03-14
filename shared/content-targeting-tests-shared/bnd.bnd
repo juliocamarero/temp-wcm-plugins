@@ -10,7 +10,9 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portal.service,\
+	com.liferay.portal.kernel.util,\
 	com.liferay.portal.util,\
+	org.osgi.framework,\
 	*
 
 Web-ContextPath: /content-targeting-tests-shared
