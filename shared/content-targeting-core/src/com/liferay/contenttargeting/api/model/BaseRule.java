@@ -53,6 +53,14 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		String className = getClass().getName();
+
+		return ResourceActionsUtil.getModelResource(
+			locale, className.concat(".description"));
+	}
+
+	@Override
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 

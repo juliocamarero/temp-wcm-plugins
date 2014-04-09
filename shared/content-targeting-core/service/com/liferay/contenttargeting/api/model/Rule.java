@@ -48,6 +48,14 @@ public interface Rule {
 		throws Exception;
 
 	/**
+	 * Returns the rule description.
+	 *
+	 * @param  locale the language's locale
+	 * @return the rule locale
+	 */
+	public String getDescription(Locale locale);
+
+	/**
 	 * Returns the HTML code containing the form fields required to edit the
 	 * rule instance's configuration, based on the context.
 	 *
