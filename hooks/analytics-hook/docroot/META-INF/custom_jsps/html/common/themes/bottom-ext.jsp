@@ -15,6 +15,7 @@
 --%>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<liferay-util:include page="/html/common/themes/bottom.portal.jsp" />
+<script>
+	Liferay.Analytics.flush();
+</script>
