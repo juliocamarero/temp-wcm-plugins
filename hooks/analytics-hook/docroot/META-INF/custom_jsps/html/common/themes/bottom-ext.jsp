@@ -14,20 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/portlet/journal_content/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<liferay-util:include page="/html/portlet/journal_content/view.portal.jsp" />
-
-<%
-JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
-%>
-
-<c:if test="<%= articleDisplay != null %>">
-	<aui:script position="inline">
-		Liferay.Analytics.track('view', {
-			className: '<%= JournalArticle.class.getName() %>',
-			classPK: '<%= articleDisplay.getResourcePrimKey() %>',
-			groupId: '<%= articleDisplay.getGroupId() %>'
-		});
-	</aui:script>
-</c:if>
+<script>
+	Liferay.Analytics.flush();
+</script>
