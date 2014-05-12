@@ -314,23 +314,23 @@ public class GeolocationLocalServiceUtil {
 
 	public static com.liferay.geolocation.model.Geolocation geoLocate(
 		long companyId, java.lang.String className, long classPK,
-		java.lang.String ipAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .geoLocate(companyId, className, classPK, ipAddress,
-			serviceContext);
-	}
-
-	public static com.liferay.geolocation.model.Geolocation geoLocate(
-		long companyId, java.lang.String className, long classPK,
 		java.lang.String ipAddress, int maxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .geoLocate(companyId, className, classPK, ipAddress, maxAge,
+			serviceContext);
+	}
+
+	public static com.liferay.geolocation.model.Geolocation geoLocate(
+		long companyId, java.lang.String className, long classPK,
+		java.lang.String ipAddress,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .geoLocate(companyId, className, classPK, ipAddress,
 			serviceContext);
 	}
 

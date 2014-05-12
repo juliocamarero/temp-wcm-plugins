@@ -132,14 +132,14 @@ public class GeolocationLocalServiceClp implements GeolocationLocalService {
 		_methodName22 = "geoLocate";
 
 		_methodParameterTypes22 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
+				"long", "java.lang.String", "long", "java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName23 = "geoLocate";
 
 		_methodParameterTypes23 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String", "int",
+				"long", "java.lang.String", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -803,7 +803,7 @@ public class GeolocationLocalServiceClp implements GeolocationLocalService {
 	@Override
 	public com.liferay.geolocation.model.Geolocation geoLocate(long companyId,
 		java.lang.String className, long classPK, java.lang.String ipAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		int maxAge, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -819,6 +819,8 @@ public class GeolocationLocalServiceClp implements GeolocationLocalService {
 					classPK,
 						
 					ClpSerializer.translateInput(ipAddress),
+						
+					maxAge,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -849,7 +851,7 @@ public class GeolocationLocalServiceClp implements GeolocationLocalService {
 	@Override
 	public com.liferay.geolocation.model.Geolocation geoLocate(long companyId,
 		java.lang.String className, long classPK, java.lang.String ipAddress,
-		int maxAge, com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -865,8 +867,6 @@ public class GeolocationLocalServiceClp implements GeolocationLocalService {
 					classPK,
 						
 					ClpSerializer.translateInput(ipAddress),
-						
-					maxAge,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});

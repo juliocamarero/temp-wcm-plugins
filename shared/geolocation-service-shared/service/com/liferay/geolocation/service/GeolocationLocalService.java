@@ -285,13 +285,13 @@ public interface GeolocationLocalService extends BaseLocalService,
 
 	public com.liferay.geolocation.model.Geolocation geoLocate(long companyId,
 		java.lang.String className, long classPK, java.lang.String ipAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		int maxAge, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.geolocation.model.Geolocation geoLocate(long companyId,
 		java.lang.String className, long classPK, java.lang.String ipAddress,
-		int maxAge, com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

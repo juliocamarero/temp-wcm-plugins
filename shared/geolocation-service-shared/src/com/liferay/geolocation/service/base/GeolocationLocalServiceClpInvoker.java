@@ -131,14 +131,14 @@ public class GeolocationLocalServiceClpInvoker {
 		_methodName49 = "geoLocate";
 
 		_methodParameterTypes49 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
+				"long", "java.lang.String", "long", "java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName50 = "geoLocate";
 
 		_methodParameterTypes50 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String", "int",
+				"long", "java.lang.String", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -268,7 +268,8 @@ public class GeolocationLocalServiceClpInvoker {
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(java.lang.String)arguments[3],
-				(com.liferay.portal.service.ServiceContext)arguments[4]);
+				((Integer)arguments[4]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
 		if (_methodName50.equals(name) &&
@@ -277,8 +278,7 @@ public class GeolocationLocalServiceClpInvoker {
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(java.lang.String)arguments[3],
-				((Integer)arguments[4]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[5]);
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
 		throw new UnsupportedOperationException();
