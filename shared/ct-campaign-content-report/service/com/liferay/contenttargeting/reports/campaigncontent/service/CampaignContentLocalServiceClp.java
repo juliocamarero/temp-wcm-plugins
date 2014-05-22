@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.service;
+package com.liferay.contenttargeting.reports.campaigncontent.service;
 
 import com.liferay.portal.service.InvokableLocalService;
 
@@ -20,29 +20,30 @@ import com.liferay.portal.service.InvokableLocalService;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService {
-	public AnalyticsEventLocalServiceClp(
+public class CampaignContentLocalServiceClp
+	implements CampaignContentLocalService {
+	public CampaignContentLocalServiceClp(
 		InvokableLocalService invokableLocalService) {
 		_invokableLocalService = invokableLocalService;
 
-		_methodName0 = "addAnalyticsEvent";
+		_methodName0 = "addCampaignContent";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.analytics.model.AnalyticsEvent"
+				"com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent"
 			};
 
-		_methodName1 = "createAnalyticsEvent";
+		_methodName1 = "createCampaignContent";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteAnalyticsEvent";
+		_methodName2 = "deleteCampaignContent";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteAnalyticsEvent";
+		_methodName3 = "deleteCampaignContent";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.analytics.model.AnalyticsEvent"
+				"com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -81,11 +82,11 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchAnalyticsEvent";
+		_methodName10 = "fetchCampaignContent";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
-		_methodName11 = "getAnalyticsEvent";
+		_methodName11 = "getCampaignContent";
 
 		_methodParameterTypes11 = new String[] { "long" };
 
@@ -93,18 +94,18 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 
 		_methodParameterTypes12 = new String[] { "java.io.Serializable" };
 
-		_methodName13 = "getAnalyticsEvents";
+		_methodName13 = "getCampaignContents";
 
 		_methodParameterTypes13 = new String[] { "int", "int" };
 
-		_methodName14 = "getAnalyticsEventsCount";
+		_methodName14 = "getCampaignContentsCount";
 
 		_methodParameterTypes14 = new String[] {  };
 
-		_methodName15 = "updateAnalyticsEvent";
+		_methodName15 = "updateCampaignContent";
 
 		_methodParameterTypes15 = new String[] {
-				"com.liferay.analytics.model.AnalyticsEvent"
+				"com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent"
 			};
 
 		_methodName16 = "getBeanIdentifier";
@@ -115,72 +116,56 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "addAnalyticsEvent";
+		_methodName19 = "addCampaignContent";
 
 		_methodParameterTypes19 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String", "long",
-				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"long", "java.lang.String", "long", "java.lang.String", "int"
 			};
 
-		_methodName20 = "checkAnalyticsEvents";
+		_methodName20 = "checkCampaignContentEvents";
 
 		_methodParameterTypes20 = new String[] {  };
 
-		_methodName21 = "deleteAnalyticsEvents";
+		_methodName21 = "getCampaignContent";
 
-		_methodParameterTypes21 = new String[] { "long", "java.util.Date" };
-
-		_methodName22 = "getAnalyticsEvents";
-
-		_methodParameterTypes22 = new String[] { "long", "java.util.Date" };
-
-		_methodName23 = "getAnalyticsEvents";
-
-		_methodParameterTypes23 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+		_methodParameterTypes21 = new String[] {
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
-		_methodName24 = "getAnalyticsEvents";
+		_methodName22 = "getCampaignContents";
 
-		_methodParameterTypes24 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.util.Date"
+		_methodParameterTypes22 = new String[] { "long" };
+
+		_methodName23 = "getCampaignContents";
+
+		_methodParameterTypes23 = new String[] { "long", "java.util.Date" };
+
+		_methodName24 = "getCampaignContentsCount";
+
+		_methodParameterTypes24 = new String[] { "long" };
+
+		_methodName25 = "getCampaignContents";
+
+		_methodParameterTypes25 = new String[] {
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName25 = "getAnalyticsEventsCount";
+		_methodName26 = "getLastCampaignContentDate";
 
-		_methodParameterTypes25 = new String[] { "long", "java.util.Date" };
-
-		_methodName26 = "getAnalyticsEventsCount";
-
-		_methodParameterTypes26 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
-			};
-
-		_methodName27 = "getAnalyticsEventsCount";
-
-		_methodParameterTypes27 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.util.Date"
-			};
-
-		_methodName28 = "getMaxAge";
-
-		_methodParameterTypes28 = new String[] {  };
+		_methodParameterTypes26 = new String[] {  };
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent addAnalyticsEvent(
-		com.liferay.analytics.model.AnalyticsEvent analyticsEvent)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent addCampaignContent(
+		com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent campaignContent)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName0,
 					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(analyticsEvent) });
+					new Object[] { ClpSerializer.translateInput(campaignContent) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -198,17 +183,17 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent createAnalyticsEvent(
-		long analyticsEventId) {
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent createCampaignContent(
+		long id) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { analyticsEventId });
+					_methodParameterTypes1, new Object[] { id });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -222,19 +207,19 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
-		long analyticsEventId)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent deleteCampaignContent(
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { analyticsEventId });
+					_methodParameterTypes2, new Object[] { id });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -256,19 +241,19 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
-		com.liferay.analytics.model.AnalyticsEvent analyticsEvent)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent deleteCampaignContent(
+		com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent campaignContent)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(analyticsEvent) });
+					new Object[] { ClpSerializer.translateInput(campaignContent) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -286,7 +271,7 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -487,14 +472,13 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent fetchAnalyticsEvent(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent fetchCampaignContent(
+		long id) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { analyticsEventId });
+					_methodParameterTypes10, new Object[] { id });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -512,19 +496,19 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent getAnalyticsEvent(
-		long analyticsEventId)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent getCampaignContent(
+		long id)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { analyticsEventId });
+					_methodParameterTypes11, new Object[] { id });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -546,7 +530,7 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -585,7 +569,7 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
-	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+	public java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent> getCampaignContents(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -610,11 +594,11 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public int getAnalyticsEventsCount()
+	public int getCampaignContentsCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -642,15 +626,15 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent updateAnalyticsEvent(
-		com.liferay.analytics.model.AnalyticsEvent analyticsEvent)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent updateCampaignContent(
+		com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent campaignContent)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName15,
 					_methodParameterTypes15,
-					new Object[] { ClpSerializer.translateInput(analyticsEvent) });
+					new Object[] { ClpSerializer.translateInput(campaignContent) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -668,7 +652,7 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -722,14 +706,9 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent addAnalyticsEvent(
-		long userId, long anonymousUserId, java.lang.String eventType,
-		java.lang.String className, long classPK,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String clientIP, java.lang.String userAgent,
-		java.lang.String languageId, java.lang.String URL,
-		java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent addCampaignContent(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -738,31 +717,15 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						userId,
-						
-					anonymousUserId,
-						
-					ClpSerializer.translateInput(eventType),
+						campaignId,
 						
 					ClpSerializer.translateInput(className),
 						
 					classPK,
 						
-					ClpSerializer.translateInput(referrerClassName),
+					ClpSerializer.translateInput(eventType),
 						
-					referrerClassPK,
-						
-					ClpSerializer.translateInput(clientIP),
-						
-					ClpSerializer.translateInput(userAgent),
-						
-					ClpSerializer.translateInput(languageId),
-						
-					ClpSerializer.translateInput(URL),
-						
-					ClpSerializer.translateInput(additionalInfo),
-						
-					ClpSerializer.translateInput(serviceContext)
+					count
 					});
 		}
 		catch (Throwable t) {
@@ -785,11 +748,11 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (com.liferay.analytics.model.AnalyticsEvent)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public void checkAnalyticsEvents()
+	public void checkCampaignContentEvents()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -818,50 +781,24 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
-	public void deleteAnalyticsEvents(long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21,
-				new Object[] { companyId, ClpSerializer.translateInput(
-						createDate) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-	}
-
-	@Override
-	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		long companyId, java.util.Date createDate)
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent getCampaignContent(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] {
-						companyId,
+						campaignId,
 						
-					ClpSerializer.translateInput(createDate)
+					ClpSerializer.translateInput(className),
+						
+					classPK,
+						
+					ClpSerializer.translateInput(eventType)
 					});
 		}
 		catch (Throwable t) {
@@ -884,13 +821,46 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate)
+	public java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent> getCampaignContents(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { campaignId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent> getCampaignContents(
+		long campaignId, java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -899,11 +869,7 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
 					_methodParameterTypes23,
 					new Object[] {
-						ClpSerializer.translateInput(className),
-						
-					classPK,
-						
-					ClpSerializer.translateInput(eventType),
+						campaignId,
 						
 					ClpSerializer.translateInput(createDate)
 					});
@@ -928,34 +894,18 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		java.lang.String className, long classPK,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType, java.util.Date createDate)
+	public int getCampaignContentsCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
-					new Object[] {
-						ClpSerializer.translateInput(className),
-						
-					classPK,
-						
-					ClpSerializer.translateInput(referrerClassName),
-						
-					referrerClassPK,
-						
-					ClpSerializer.translateInput(eventType),
-						
-					ClpSerializer.translateInput(createDate)
-					});
+					_methodParameterTypes24, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -977,11 +927,13 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+		return ((Integer)returnObj).intValue();
 	}
 
 	@Override
-	public int getAnalyticsEventsCount(long companyId, java.util.Date createDate)
+	public java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent> getCampaignContents(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -990,9 +942,13 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
 					_methodParameterTypes25,
 					new Object[] {
-						companyId,
+						campaignId,
 						
-					ClpSerializer.translateInput(createDate)
+					start,
+						
+					end,
+						
+					ClpSerializer.translateInput(orderByComparator)
 					});
 		}
 		catch (Throwable t) {
@@ -1015,120 +971,19 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 			}
 		}
 
-		return ((Integer)returnObj).intValue();
+		return (java.util.List<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public int getAnalyticsEventsCount(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public java.util.Date getLastCampaignContentDate() {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
-					new Object[] {
-						ClpSerializer.translateInput(className),
-						
-					classPK,
-						
-					ClpSerializer.translateInput(eventType),
-						
-					ClpSerializer.translateInput(createDate)
-					});
+					_methodParameterTypes26, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Integer)returnObj).intValue();
-	}
-
-	@Override
-	public int getAnalyticsEventsCount(java.lang.String className,
-		long classPK, java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
-					new Object[] {
-						ClpSerializer.translateInput(className),
-						
-					classPK,
-						
-					ClpSerializer.translateInput(referrerClassName),
-						
-					referrerClassPK,
-						
-					ClpSerializer.translateInput(eventType),
-						
-					ClpSerializer.translateInput(createDate)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Integer)returnObj).intValue();
-	}
-
-	@Override
-	public java.util.Date getMaxAge()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] {  });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -1195,8 +1050,4 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	private String[] _methodParameterTypes25;
 	private String _methodName26;
 	private String[] _methodParameterTypes26;
-	private String _methodName27;
-	private String[] _methodParameterTypes27;
-	private String _methodName28;
-	private String[] _methodParameterTypes28;
 }

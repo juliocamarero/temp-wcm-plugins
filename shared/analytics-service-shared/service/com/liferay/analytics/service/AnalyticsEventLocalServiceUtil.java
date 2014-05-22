@@ -311,6 +311,58 @@ public class AnalyticsEventLocalServiceUtil {
 		return getService().getAnalyticsEvents(companyId, createDate);
 	}
 
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String className, long classPK, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEvents(className, classPK, eventType, createDate);
+	}
+
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String className, long classPK,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEvents(className, classPK, referrerClassName,
+			referrerClassPK, eventType, createDate);
+	}
+
+	public static int getAnalyticsEventsCount(long companyId,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAnalyticsEventsCount(companyId, createDate);
+	}
+
+	public static int getAnalyticsEventsCount(java.lang.String className,
+		long classPK, java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEventsCount(className, classPK, eventType,
+			createDate);
+	}
+
+	public static int getAnalyticsEventsCount(java.lang.String className,
+		long classPK, java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEventsCount(className, classPK,
+			referrerClassName, referrerClassPK, eventType, createDate);
+	}
+
+	public static java.util.Date getMaxAge()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMaxAge();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

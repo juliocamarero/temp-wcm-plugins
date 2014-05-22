@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.analytics.service.base;
+package com.liferay.contenttargeting.reports.campaigncontent.service.base;
 
-import com.liferay.analytics.service.AnalyticsEventLocalServiceUtil;
+import com.liferay.contenttargeting.reports.campaigncontent.service.CampaignContentLocalServiceUtil;
 
 import java.util.Arrays;
 
@@ -22,26 +22,26 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class AnalyticsEventLocalServiceClpInvoker {
-	public AnalyticsEventLocalServiceClpInvoker() {
-		_methodName0 = "addAnalyticsEvent";
+public class CampaignContentLocalServiceClpInvoker {
+	public CampaignContentLocalServiceClpInvoker() {
+		_methodName0 = "addCampaignContent";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.analytics.model.AnalyticsEvent"
+				"com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent"
 			};
 
-		_methodName1 = "createAnalyticsEvent";
+		_methodName1 = "createCampaignContent";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteAnalyticsEvent";
+		_methodName2 = "deleteCampaignContent";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteAnalyticsEvent";
+		_methodName3 = "deleteCampaignContent";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.analytics.model.AnalyticsEvent"
+				"com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -80,11 +80,11 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchAnalyticsEvent";
+		_methodName10 = "fetchCampaignContent";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
-		_methodName11 = "getAnalyticsEvent";
+		_methodName11 = "getCampaignContent";
 
 		_methodParameterTypes11 = new String[] { "long" };
 
@@ -92,18 +92,18 @@ public class AnalyticsEventLocalServiceClpInvoker {
 
 		_methodParameterTypes12 = new String[] { "java.io.Serializable" };
 
-		_methodName13 = "getAnalyticsEvents";
+		_methodName13 = "getCampaignContents";
 
 		_methodParameterTypes13 = new String[] { "int", "int" };
 
-		_methodName14 = "getAnalyticsEventsCount";
+		_methodName14 = "getCampaignContentsCount";
 
 		_methodParameterTypes14 = new String[] {  };
 
-		_methodName15 = "updateAnalyticsEvent";
+		_methodName15 = "updateCampaignContent";
 
 		_methodParameterTypes15 = new String[] {
-				"com.liferay.analytics.model.AnalyticsEvent"
+				"com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent"
 			};
 
 		_methodName34 = "getBeanIdentifier";
@@ -114,104 +114,88 @@ public class AnalyticsEventLocalServiceClpInvoker {
 
 		_methodParameterTypes35 = new String[] { "java.lang.String" };
 
-		_methodName40 = "addAnalyticsEvent";
+		_methodName41 = "addCampaignContent";
 
-		_methodParameterTypes40 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String", "long",
-				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+		_methodParameterTypes41 = new String[] {
+				"long", "java.lang.String", "long", "java.lang.String", "int"
 			};
 
-		_methodName41 = "checkAnalyticsEvents";
+		_methodName42 = "checkCampaignContentEvents";
 
-		_methodParameterTypes41 = new String[] {  };
+		_methodParameterTypes42 = new String[] {  };
 
-		_methodName42 = "deleteAnalyticsEvents";
+		_methodName43 = "getCampaignContent";
 
-		_methodParameterTypes42 = new String[] { "long", "java.util.Date" };
-
-		_methodName43 = "getAnalyticsEvents";
-
-		_methodParameterTypes43 = new String[] { "long", "java.util.Date" };
-
-		_methodName44 = "getAnalyticsEvents";
-
-		_methodParameterTypes44 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+		_methodParameterTypes43 = new String[] {
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
-		_methodName45 = "getAnalyticsEvents";
+		_methodName44 = "getCampaignContents";
 
-		_methodParameterTypes45 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.util.Date"
-			};
+		_methodParameterTypes44 = new String[] { "long" };
 
-		_methodName46 = "getAnalyticsEventsCount";
+		_methodName45 = "getCampaignContents";
 
-		_methodParameterTypes46 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes45 = new String[] { "long", "java.util.Date" };
 
-		_methodName47 = "getAnalyticsEventsCount";
+		_methodName46 = "getCampaignContentsCount";
+
+		_methodParameterTypes46 = new String[] { "long" };
+
+		_methodName47 = "getCampaignContents";
 
 		_methodParameterTypes47 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName48 = "getAnalyticsEventsCount";
+		_methodName48 = "getLastCampaignContentDate";
 
-		_methodParameterTypes48 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.util.Date"
-			};
-
-		_methodName49 = "getMaxAge";
-
-		_methodParameterTypes49 = new String[] {  };
+		_methodParameterTypes48 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
 		if (_methodName0.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.addAnalyticsEvent((com.liferay.analytics.model.AnalyticsEvent)arguments[0]);
+			return CampaignContentLocalServiceUtil.addCampaignContent((com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)arguments[0]);
 		}
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.createAnalyticsEvent(((Long)arguments[0]).longValue());
+			return CampaignContentLocalServiceUtil.createCampaignContent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.deleteAnalyticsEvent(((Long)arguments[0]).longValue());
+			return CampaignContentLocalServiceUtil.deleteCampaignContent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.deleteAnalyticsEvent((com.liferay.analytics.model.AnalyticsEvent)arguments[0]);
+			return CampaignContentLocalServiceUtil.deleteCampaignContent((com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)arguments[0]);
 		}
 
 		if (_methodName4.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.dynamicQuery();
+			return CampaignContentLocalServiceUtil.dynamicQuery();
 		}
 
 		if (_methodName5.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return CampaignContentLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName6.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return CampaignContentLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName7.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return CampaignContentLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
@@ -219,135 +203,108 @@ public class AnalyticsEventLocalServiceClpInvoker {
 
 		if (_methodName8.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return CampaignContentLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName9.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return CampaignContentLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				(com.liferay.portal.kernel.dao.orm.Projection)arguments[1]);
 		}
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.fetchAnalyticsEvent(((Long)arguments[0]).longValue());
+			return CampaignContentLocalServiceUtil.fetchCampaignContent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvent(((Long)arguments[0]).longValue());
+			return CampaignContentLocalServiceUtil.getCampaignContent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+			return CampaignContentLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName13.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Integer)arguments[0]).intValue(),
+			return CampaignContentLocalServiceUtil.getCampaignContents(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount();
+			return CampaignContentLocalServiceUtil.getCampaignContentsCount();
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.updateAnalyticsEvent((com.liferay.analytics.model.AnalyticsEvent)arguments[0]);
+			return CampaignContentLocalServiceUtil.updateCampaignContent((com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent)arguments[0]);
 		}
 
 		if (_methodName34.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getBeanIdentifier();
+			return CampaignContentLocalServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName35.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
-			AnalyticsEventLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			CampaignContentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
-		}
-
-		if (_methodName40.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.addAnalyticsEvent(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				((Long)arguments[4]).longValue(),
-				(java.lang.String)arguments[5],
-				((Long)arguments[6]).longValue(),
-				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
-				(java.lang.String)arguments[9],
-				(java.lang.String)arguments[10],
-				(java.lang.String)arguments[11],
-				(com.liferay.portal.service.ServiceContext)arguments[12]);
 		}
 
 		if (_methodName41.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
-			AnalyticsEventLocalServiceUtil.checkAnalyticsEvents();
-
-			return null;
+			return CampaignContentLocalServiceUtil.addCampaignContent(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(),
+				(java.lang.String)arguments[3],
+				((Integer)arguments[4]).intValue());
 		}
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
-			AnalyticsEventLocalServiceUtil.deleteAnalyticsEvents(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+			CampaignContentLocalServiceUtil.checkCampaignContentEvents();
 
 			return null;
 		}
 
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+			return CampaignContentLocalServiceUtil.getCampaignContent(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+			return CampaignContentLocalServiceUtil.getCampaignContents(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2],
-				((Long)arguments[3]).longValue(),
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5]);
+			return CampaignContentLocalServiceUtil.getCampaignContents(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
 		}
 
 		if (_methodName46.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+			return CampaignContentLocalServiceUtil.getCampaignContentsCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName47.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+			return CampaignContentLocalServiceUtil.getCampaignContents(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2],
-				((Long)arguments[3]).longValue(),
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5]);
-		}
-
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getMaxAge();
+			return CampaignContentLocalServiceUtil.getLastCampaignContentDate();
 		}
 
 		throw new UnsupportedOperationException();
@@ -389,8 +346,6 @@ public class AnalyticsEventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
-	private String _methodName40;
-	private String[] _methodParameterTypes40;
 	private String _methodName41;
 	private String[] _methodParameterTypes41;
 	private String _methodName42;
@@ -407,6 +362,4 @@ public class AnalyticsEventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes47;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
-	private String _methodName49;
-	private String[] _methodParameterTypes49;
 }
