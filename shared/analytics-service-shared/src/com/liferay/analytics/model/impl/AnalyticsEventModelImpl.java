@@ -99,8 +99,13 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.analytics.model.AnalyticsEvent"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static long CLASSNAME_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 16L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 32L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -417,7 +422,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setEventType(String eventType) {
+		_columnBitmask |= EVENTTYPE_COLUMN_BITMASK;
+
+		if (_originalEventType == null) {
+			_originalEventType = _eventType;
+		}
+
 		_eventType = eventType;
+	}
+
+	public String getOriginalEventType() {
+		return GetterUtil.getString(_originalEventType);
 	}
 
 	@JSON
@@ -433,7 +448,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setClassName(String className) {
+		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+
+		if (_originalClassName == null) {
+			_originalClassName = _className;
+		}
+
 		_className = className;
+	}
+
+	public String getOriginalClassName() {
+		return GetterUtil.getString(_originalClassName);
 	}
 
 	@JSON
@@ -444,7 +469,19 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -460,7 +497,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setReferrerClassName(String referrerClassName) {
+		_columnBitmask |= REFERRERCLASSNAME_COLUMN_BITMASK;
+
+		if (_originalReferrerClassName == null) {
+			_originalReferrerClassName = _referrerClassName;
+		}
+
 		_referrerClassName = referrerClassName;
+	}
+
+	public String getOriginalReferrerClassName() {
+		return GetterUtil.getString(_originalReferrerClassName);
 	}
 
 	@JSON
@@ -471,7 +518,19 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setReferrerClassPK(long referrerClassPK) {
+		_columnBitmask |= REFERRERCLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalReferrerClassPK) {
+			_setOriginalReferrerClassPK = true;
+
+			_originalReferrerClassPK = _referrerClassPK;
+		}
+
 		_referrerClassPK = referrerClassPK;
+	}
+
+	public long getOriginalReferrerClassPK() {
+		return _originalReferrerClassPK;
 	}
 
 	@JSON
@@ -658,6 +717,20 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		analyticsEventModelImpl._setOriginalCompanyId = false;
 
 		analyticsEventModelImpl._originalCreateDate = analyticsEventModelImpl._createDate;
+
+		analyticsEventModelImpl._originalEventType = analyticsEventModelImpl._eventType;
+
+		analyticsEventModelImpl._originalClassName = analyticsEventModelImpl._className;
+
+		analyticsEventModelImpl._originalClassPK = analyticsEventModelImpl._classPK;
+
+		analyticsEventModelImpl._setOriginalClassPK = false;
+
+		analyticsEventModelImpl._originalReferrerClassName = analyticsEventModelImpl._referrerClassName;
+
+		analyticsEventModelImpl._originalReferrerClassPK = analyticsEventModelImpl._referrerClassPK;
+
+		analyticsEventModelImpl._setOriginalReferrerClassPK = false;
 
 		analyticsEventModelImpl._columnBitmask = 0;
 	}
@@ -882,10 +955,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	private long _anonymousUserId;
 	private String _anonymousUserUuid;
 	private String _eventType;
+	private String _originalEventType;
 	private String _className;
+	private String _originalClassName;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _referrerClassName;
+	private String _originalReferrerClassName;
 	private long _referrerClassPK;
+	private long _originalReferrerClassPK;
+	private boolean _setOriginalReferrerClassPK;
 	private String _clientIP;
 	private String _userAgent;
 	private String _languageId;
