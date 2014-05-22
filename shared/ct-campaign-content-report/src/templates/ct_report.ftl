@@ -9,6 +9,10 @@
 
 <#setting number_format="computer">
 
+<#if campaignContents?has_content>
+	<#include "ct_chart.ftl" />
+</#if>
+
 <@portlet["renderURL"] varImpl="portletURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_CAMPAIGN_REPORTS}" />
 	<@portlet["param"] name="tabs1" value="${tabs1}" />
