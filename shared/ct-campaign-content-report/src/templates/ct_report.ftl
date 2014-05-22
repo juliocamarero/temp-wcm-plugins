@@ -7,19 +7,22 @@
 
 <@liferay_theme["defineObjects"] />
 
-<@portlet["renderURL"] var="viewCampaignContentsURL">
+<#setting number_format="computer">
+
+<@portlet["renderURL"] varImpl="portletURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_CAMPAIGN_REPORTS}" />
 	<@portlet["param"] name="tabs1" value="${tabs1}" />
 	<@portlet["param"] name="tabs2" value="${tabs2}" />
+	<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
 </@>
 
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-reports-for-campaign-content-were-found"
-	iteratorURL=liferayPortletResponse.createRenderURL()
+	iteratorURL=portletURL
 >
 	<@liferay_ui["search-container-results"]
 		results=campaignContents
-		total=campaignContents?size
+		total=totalCampaignContents
 	/>
 
 	<@liferay_ui["search-container-row"]
