@@ -21,13 +21,19 @@ import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent;
 import com.liferay.contenttargeting.reports.campaigncontent.service.CampaignContentLocalServiceUtil;
+import com.liferay.contenttargeting.reports.campaigncontent.util.comparator.CampaignContentCountComparator;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eduardo Garcia
@@ -61,18 +67,43 @@ public class CampaignContentReport extends BaseReport {
 
 		List<CampaignContent> campaignContents = Collections.emptyList();
 
-		if (campaignId != 0) {
-			try {
-				campaignContents =
-					CampaignContentLocalServiceUtil.getCampaignContents(
-						campaignId);
-			}
-			catch (Exception e) {
-				_log.error("Cannot render report for campaign " + campaignId);
-			}
+		int totalCampaignContents = 0;
+
+		if (campaignId == 0) {
+			context.put("campaignContents", campaignContents);
+			context.put("totalCampaignContents", totalCampaignContents);
+
+			return;
+		}
+
+		HttpServletRequest request = (HttpServletRequest)context.get("request");
+
+		int cur = ParamUtil.getInteger(
+			request, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
+
+		int delta = ParamUtil.getInteger(
+			request, SearchContainer.DEFAULT_DELTA_PARAM,
+			SearchContainer.DEFAULT_DELTA);
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			cur, delta);
+
+		try {
+			campaignContents =
+				CampaignContentLocalServiceUtil.getCampaignContents(
+					campaignId, startAndEnd[0], startAndEnd[1],
+					new CampaignContentCountComparator());
+
+			totalCampaignContents =
+				CampaignContentLocalServiceUtil.getCampaignContentsCount();
+		}
+		catch (Exception e) {
+			_log.error("Cannot render report for campaign " + campaignId);
 		}
 
 		context.put("campaignContents", campaignContents);
+		context.put("totalCampaignContents", totalCampaignContents);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
