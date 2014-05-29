@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -90,6 +91,29 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
+	public List<AnalyticsEvent> addAnalyticsEvent(
+			long userId, long anonymousUserId, String eventType,
+			String className, long classPK, String referrerClassName,
+			long[] referrerClassPKs, String clientIP, String userAgent,
+			String languageId, String URL, String additionalInfo,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<AnalyticsEvent> analyticsEvents = new ArrayList<AnalyticsEvent>();
+
+		for (long referrerClassPK : referrerClassPKs) {
+			AnalyticsEvent analyticsEvent = addAnalyticsEvent(
+				userId, anonymousUserId, eventType, className, classPK,
+				referrerClassName, referrerClassPK, clientIP, userAgent,
+				languageId, URL, additionalInfo, serviceContext);
+
+			analyticsEvents.add(analyticsEvent);
+		}
+
+		return analyticsEvents;
+	}
+
+	@Override
 	public void checkAnalyticsEvents() throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			new CompanyActionableDynamicQuery() {
@@ -128,7 +152,55 @@ public class AnalyticsEventLocalServiceImpl
 		return analyticsEventPersistence.findByC_GtD(companyId, createDate);
 	}
 
-	protected Date getMaxAge() throws PortalException, SystemException {
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			String className, long classPK, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByC_C_E_GtD(
+			className, classPK, eventType, createDate);
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			String className, long classPK, String referrerClassName,
+			long referrerClassPK, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByC_C_R_R_E_GtD(
+			className, classPK, referrerClassName, referrerClassPK, eventType,
+			createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(long companyId, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.countByC_GtD(companyId, createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(
+			String className, long classPK, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.countByC_C_E_GtD(
+			className, classPK, eventType, createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(
+			String className, long classPK, String referrerClassName,
+			long referrerClassPK, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.countByC_C_R_R_E_GtD(
+			className, classPK, referrerClassName, referrerClassPK, eventType,
+			createDate);
+	}
+
+	@Override
+	public Date getMaxAge() throws PortalException, SystemException {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(new Date());
