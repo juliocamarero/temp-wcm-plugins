@@ -96,7 +96,8 @@ public class CampaignContentReport extends BaseReport {
 					new CampaignContentCountComparator());
 
 			totalCampaignContents =
-				CampaignContentLocalServiceUtil.getCampaignContentsCount();
+				CampaignContentLocalServiceUtil.getCampaignContentsCount(
+					campaignId);
 		}
 		catch (Exception e) {
 			_log.error("Cannot render report for campaign " + campaignId);
