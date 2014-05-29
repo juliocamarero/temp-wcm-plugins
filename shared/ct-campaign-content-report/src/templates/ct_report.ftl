@@ -7,6 +7,8 @@
 
 <@liferay_theme["defineObjects"] />
 
+<#-- This setting is necessary since we are not loading FTL_liferay.ftl in the reports or rules -->
+
 <#setting number_format="computer">
 
 <#if campaignContents?has_content>
@@ -23,10 +25,10 @@
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-reports-for-campaign-content-were-found"
 	iteratorURL=portletURL
+	total=searchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]
-		results=campaignContents
-		total=totalCampaignContents
+		results=searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
 	/>
 
 	<@liferay_ui["search-container-row"]

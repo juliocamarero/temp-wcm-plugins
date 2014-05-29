@@ -24,15 +24,19 @@ import com.liferay.contenttargeting.reports.campaigncontent.service.CampaignCont
 import com.liferay.contenttargeting.reports.campaigncontent.util.comparator.CampaignContentCountComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -63,9 +67,25 @@ public class CampaignContentReport extends BaseReport {
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
-		long campaignId = MapUtil.getLong(context, "campaignId", 0);
+		final long campaignId = MapUtil.getLong(context, "campaignId", 0);
 
 		List<CampaignContent> campaignContents = Collections.emptyList();
+
+		PortletRequest renderRequest = (PortletRequest)context.get(
+			"renderRequest");
+
+		PortletRequest renderResponse = (PortletRequest)context.get(
+			"renderResponse");
+
+		PortletURLFactoryUtil.create(renderRequest, );
+
+
+		SearchContainer<CampaignContent> searchContainer =
+			new SearchContainer<CampaignContent>(renderRequest, );
+
+		searchContainer.setResults();
+		searchContainer.setTotal();
+
 
 		int totalCampaignContents = 0;
 
@@ -102,11 +122,47 @@ public class CampaignContentReport extends BaseReport {
 			_log.error("Cannot render report for campaign " + campaignId);
 		}
 
+		context.put(
+			"searchContainerIterator",
+			new SearchContainerIterator<CampaignContent>() {
+
+				@Override
+				public List<CampaignContent> getResults(int start, int end)
+					throws SystemException, PortalException {
+
+					return CampaignContentLocalServiceUtil.getCampaignContents(
+						campaignId, start, end,
+						new CampaignContentCountComparator());
+				}
+
+				@Override
+				public int getTotal() throws SystemException, PortalException {
+					return
+						CampaignContentLocalServiceUtil.
+							getCampaignContentsCount(campaignId);
+				}
+			}
+		);
+
 		context.put("campaignContents", campaignContents);
 		context.put("totalCampaignContents", totalCampaignContents);
 	}
 
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignContentReport.class);
 
+	public class SearchContainerIterator<R> {
+		public List<R> getResults(int start, int end)
+			throws SystemException, PortalException {
+
+			return Collections.emptyList();
+		}
+
+		public int getTotal() throws SystemException, PortalException {
+			return 0;
+		}
+	}
+
 }
+
