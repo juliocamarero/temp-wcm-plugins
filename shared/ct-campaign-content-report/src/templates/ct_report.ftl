@@ -56,7 +56,7 @@
 
 		<@liferay_ui["search-container-column-date"]
 			name="last-update"
-			value=campaignContent.getCreateDate()
+			value=campaignContent.getModifiedDate()
 		/>
 	</@>
 
