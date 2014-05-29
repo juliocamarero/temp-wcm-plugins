@@ -47,7 +47,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
 		String referrerClassName = message.getString("referrerClassName");
-		long referrerClassPK = message.getLong("plid");
+		long referrerClassPK = message.getLong("referrerClassPK");
 
 		if (Validator.isNull(referrerClassName) ||
 			Validator.isNull(referrerClassPK)) {
@@ -66,9 +66,9 @@ public class AnalyticsMessageListener implements MessageListener {
 		serviceContext.setCompanyId(companyId);
 
 		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
-			userId, anonymousUserId, eventType, className, classPK,
-			referrerClassName, referrerClassPK, clientIP, userAgent, languageId,
-			URL, StringPool.BLANK, serviceContext);
+			userId, anonymousUserId, className, classPK, referrerClassName,
+			referrerClassPK, eventType, clientIP, userAgent, languageId, URL,
+			StringPool.BLANK, serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

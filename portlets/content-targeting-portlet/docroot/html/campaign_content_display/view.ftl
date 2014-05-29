@@ -37,6 +37,16 @@
 		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/full_content.jsp">
 			<@liferay_util["param"] name="showExtraInfo" value="false" />
 		</@>
+
+		<@aui["script"] position="inline">
+			Liferay.Analytics.track('view', {
+				className: '${assetEntryClassName}',
+				classPK: '${assetEntryClassPK}',
+				groupId: '${groupId}'
+				referrerClassName: '${campaignClassName}',
+				referrerClassPK: '${campaignClassPK}',
+			});
+		</@>
 	</div>
 <#else>
 	<div class="alert alert-info">
