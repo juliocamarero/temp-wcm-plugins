@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="content-targeting" basedir="." default="deploy">
+	<import file="../build-common-app.xml" />
+
+	<target name="clean" depends="build-common-app.clean" />
+
+	<target name="deploy" depends="build-common-app.deploy" />
+</project>
