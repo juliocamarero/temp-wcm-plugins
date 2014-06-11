@@ -2,5 +2,5 @@
 <!DOCTYPE project>
 
 <project name="analytics-hook" basedir="." default="deploy">
-	<import file="../../build-common-plugin.xml" />
+	<import file="../../../build-common-plugin.xml" />
 </project>

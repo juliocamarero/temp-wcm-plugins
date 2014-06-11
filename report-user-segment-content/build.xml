@@ -5,5 +5,5 @@
 
 	<property name="import.shared" value="service-utils-shared,analytics-service-shared,anonymous-users-shared,content-targeting-core" />
 
-	<import file="../../build-common-osgi-plugin.xml" />
+	<import file="../../../build-common-osgi-plugin.xml" />
 </project>
