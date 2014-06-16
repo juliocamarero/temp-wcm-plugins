@@ -3,7 +3,11 @@
 <project name="report-campaign-content" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="service-utils-shared,analytics-service-shared,anonymous-users-shared,content-targeting-core" />
+	<property name="import.shared" value="analytics-service-shared,anonymous-users-shared,content-targeting-core" />
+
+	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar" />
+
+	<property name="service.base.dir" value="." />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -590,8 +590,7 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.analytics.model.AnalyticsEvent analyticsEvent) {
+	public int compareTo(AnalyticsEvent analyticsEvent) {
 		return _analyticsEvent.compareTo(analyticsEvent);
 	}
 
@@ -601,17 +600,17 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.analytics.model.AnalyticsEvent> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<AnalyticsEvent> toCacheModel() {
 		return _analyticsEvent.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent toEscapedModel() {
+	public AnalyticsEvent toEscapedModel() {
 		return new AnalyticsEventWrapper(_analyticsEvent.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.analytics.model.AnalyticsEvent toUnescapedModel() {
+	public AnalyticsEvent toUnescapedModel() {
 		return new AnalyticsEventWrapper(_analyticsEvent.toUnescapedModel());
 	}
 

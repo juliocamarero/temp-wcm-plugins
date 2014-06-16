@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -296,8 +296,7 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint scorePoint) {
+	public int compareTo(ScorePoint scorePoint) {
 		return _scorePoint.compareTo(scorePoint);
 	}
 
@@ -307,17 +306,17 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<ScorePoint> toCacheModel() {
 		return _scorePoint.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint toEscapedModel() {
+	public ScorePoint toEscapedModel() {
 		return new ScorePointWrapper(_scorePoint.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint toUnescapedModel() {
+	public ScorePoint toUnescapedModel() {
 		return new ScorePointWrapper(_scorePoint.toUnescapedModel());
 	}
 
